@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MypageActivity">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:paddingTop="30dp"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="내정보"/>
+    <Button
+        android:id="@+id/login_info_Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00ff0000"
+        android:layout_weight="1"
+        android:text="로그인                                                                                                         >" />
+    <Button
+        android:id="@+id/address_info_Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00ff0000"
+        android:layout_weight="1"
+        android:text="주소                                                                                                            >" />
+    <Button
+        android:id="@+id/level_info_Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00ff0000"
+        android:layout_weight="1"
+        android:text="신뢰도                                                                                                         >" />
+
+</LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:paddingTop="40dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="나의 게시물"/>
+
+        <Button
+            android:id="@+id/write_info_Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00ff0000"
+            android:layout_weight="1"
+            android:text="내 게시물                                                                                                    >" />
+
+        <Button
+            android:id="@+id/reply_info_Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00ff0000"
+            android:layout_weight="1"
+            android:text="내 댓글                                                                                                         >" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:paddingTop="40dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="친구"/>
+
+        <Button
+            android:id="@+id/friend_find_Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00ff0000"
+            android:layout_weight="1"
+            android:text="친구 찾기                                                                                                     >" />
+
+        <Button
+            android:id="@+id/myfriendButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00ff0000"
+            android:layout_weight="1"
+            android:text="등록된 친구 보기                                                                                        >" />
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이전으로"
+        android:id="@+id/mButton"/>
+
+</LinearLayout>

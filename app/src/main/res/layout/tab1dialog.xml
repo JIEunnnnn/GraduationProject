@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp"
+    android:orientation="vertical" >
+
+
+
+    <LinearLayout
+        android:layout_width="354dp"
+        android:layout_height="424dp"
+        android:background="@drawable/round_square_01"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="오늘의 기분" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/chkhappy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="행복" />
+
+
+            <CheckBox
+                android:id="@+id/chksad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="슬픔" />
+
+
+            <CheckBox
+                android:id="@+id/chkanger"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="분노" />
+
+
+            <CheckBox
+                android:id="@+id/chkjoy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="즐거움" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/chklove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사랑" />
+
+
+            <CheckBox
+                android:id="@+id/chkhate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="미움" />
+
+
+            <CheckBox
+                android:id="@+id/chkgreed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="욕심" />
+
+
+            <CheckBox
+                android:id="@+id/chkgloom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="우울" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="오늘의 일기" />
+
+        <EditText
+            android:id="@+id/eddiary"
+            android:layout_width="284dp"
+            android:layout_height="62dp"
+            android:layout_gravity="center"
+            android:background="@drawable/round_square_02"
+            android:hint="일기를 작성해주세요^^*"
+            android:scrollbars="vertical" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="#식사#" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+
+            <CheckBox
+                android:id="@+id/chkhousefood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="집밥" />
+
+
+            <CheckBox
+                android:id="@+id/chkoutfood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="외식" />
+
+            <CheckBox
+                android:id="@+id/chkdelivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="배달" />
+
+            <CheckBox
+                android:id="@+id/chkFetc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="기타" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="#문화생활#" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/chkmovie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="영화" />
+
+            <CheckBox
+                android:id="@+id/chkbook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="독서" />
+
+            <CheckBox
+                android:id="@+id/chkmuseum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="전시 및 관람" />
+
+            <CheckBox
+                android:id="@+id/chkhobby"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="취미" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/chkdrink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="음주" />
+
+            <CheckBox
+                android:id="@+id/chkshopping"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="쇼핑" />
+
+            <CheckBox
+                android:id="@+id/chknot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="안함" />
+
+            <CheckBox
+                android:id="@+id/chkMetc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="기타" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="#본인관리#" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/chkrest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="휴식" />
+
+            <CheckBox
+                android:id="@+id/chkhospital"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="병원" />
+
+            <CheckBox
+                android:id="@+id/chkbeauty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="미용" />
+
+            <CheckBox
+                android:id="@+id/chkexercise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="운동" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_button_02"
+                android:layout_marginHorizontal="10dp"
+                android:text="저장" />
+
+            <Button
+                android:id="@+id/btn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_button_02"
+                android:layout_marginHorizontal="10dp"
+                android:text="취소" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
