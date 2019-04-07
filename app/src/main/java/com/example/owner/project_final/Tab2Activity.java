@@ -84,18 +84,6 @@ public class Tab2Activity extends AppCompatActivity
         -> GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener
      */
 
-    // For Activity finish -------------------------------------------------------------------------
-    public static Activity tab2Activity;
-
-
-    MainActivity mainact = (MainActivity)MainActivity.mainActivity;
-    Tab1Activity tab1act = (Tab1Activity)Tab1Activity.tab1Activity;
-    Tab2Activity tab2act = (Tab2Activity)Tab2Activity.tab2Activity;
-    Tab3Activity tab3act = (Tab3Activity)Tab3Activity.tab3Activity;
-    PurchaseActivity purchaseact = (PurchaseActivity)PurchaseActivity.purchaseActivity;
-    RoomActivity roomact = (RoomActivity)RoomActivity.roomActivity;
-    //----------------------------------------------------------------------------------------------
-
     // For Toolbar ---------------------------------------------------------------------------------
     Toolbar toolBar;
     //----------------------------------------------------------------------------------------------
@@ -151,14 +139,6 @@ public class Tab2Activity extends AppCompatActivity
         mapFragment.getMapAsync(this);
         */
         //------------------------------------------------------------------------------------------
-
-        // For Activity finish ---------------------------------------------------------------------
-        tab2Activity = Tab2Activity.this;
-
-//        tab1act.finish();
-//        tab2act.finish();
-//        tab3act.finish();
-        // -----------------------------------------------------------------------------------------
 
         /*/ For Toolbar -----------------------------------------------------------------------------
         toolBar = (Toolbar)findViewById(R.id.tab2Toolbar);
