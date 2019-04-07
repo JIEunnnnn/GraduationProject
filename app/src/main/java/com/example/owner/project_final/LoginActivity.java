@@ -112,21 +112,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-    // 구글로그인 버튼 응답
-    if (requestCode == RC_SIGN_IN) {
-        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-        try {
-            // 구글 로그인 성공
-            GoogleSignInAccount account = task.getResult(ApiException.class);
-            firebaseAuthWithGoogle(account);
-        } catch (ApiException e) {
-            Log.w("Google sign in failed", e);
+        // 구글로그인 버튼 응답
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // 구글 로그인 성공
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account);
+            } catch (ApiException e) {
+                Log.w("Google sign in failed", e);
+            }
         }
     }
-}
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
@@ -154,7 +154,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
         FirebaseUser currentUser = fireauth.getCurrentUser();
         fireauth.getInstance().signOut();
     }
-//------------
+    //------------
     private void processStart() {
         if (FirebaseApi.getCurrentUser() != null) {
             L.e("::::최신 로그인 기록이 있음");
