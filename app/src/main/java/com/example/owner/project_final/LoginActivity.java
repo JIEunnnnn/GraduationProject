@@ -16,6 +16,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -58,6 +59,8 @@ import butterknife.OnClick;
 public class LoginActivity extends AppCompatActivity {
     //[오투잡] 2019.04.03 로그인 로직 변경
 
+
+
     @BindView(R.id.loginActivity_edittext_id)
     EditText id;
 
@@ -68,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 900;
     private GoogleSignInClient googleSignInClient;
-    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth fireauth;
     private SignInButton buttonGoogle;
 
     @Override
@@ -76,7 +79,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+
 //-------------
+
+        fireauth = FirebaseAuth.getInstance();
         buttonGoogle = findViewById(R.id.btn_googleSignIn);
 
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -98,7 +105,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 //------------
-@Override
+
+    private void signIn() {
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
 public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
 
@@ -110,14 +123,14 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
             GoogleSignInAccount account = task.getResult(ApiException.class);
             firebaseAuthWithGoogle(account);
         } catch (ApiException e) {
-
+            Log.w("Google sign in failed", e);
         }
     }
 }
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        firebaseAuth.signInWithCredential(credential)
+        fireauth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -132,6 +145,14 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
                     }
                 });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = fireauth.getCurrentUser();
+        fireauth.getInstance().signOut();
     }
 //------------
     private void processStart() {
@@ -148,11 +169,13 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 
 
+   /*
     @Override
     protected void onStart() {
         super.onStart();
 
     }
+    */
 
     @OnClick(R.id.loginActivity_button_login)
     public void login(View view) {
