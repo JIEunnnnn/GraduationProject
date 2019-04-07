@@ -334,7 +334,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.2"
-                            android:background="#ababab"
+                            android:background="@drawable/round_button_06"
                             android:gravity="center"
                             android:text="검색"
                             android:textAppearance="?android:attr/textAppearanceLarge"

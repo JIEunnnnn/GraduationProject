@@ -146,6 +146,7 @@ public class Tab1Activity extends MainActivity {
 */
                     case R.id.navi_tab4:    //무드등
                         Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), BluetoothLED.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;

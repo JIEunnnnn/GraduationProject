@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
 */
                     case R.id.navi_tab4:    //무드등
                         Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), BluetoothLED.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
@@ -212,16 +213,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+*/
         btn_sixth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent().setClass( getApplicationContext(),Tab3Activity.class );
+                intent = new Intent().setClass( getApplicationContext(), FreeActivity.class );
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
             }
         });
-*/
 
     }
 

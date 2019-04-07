@@ -389,6 +389,7 @@ public class RoomDetailActivity extends AppCompatActivity {
 */
                     case R.id.navi_tab4:    //무드등
                         Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), BluetoothLED.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
@@ -547,6 +548,7 @@ public class RoomDetailActivity extends AppCompatActivity {
                 return true;
             case R.id.ChatButton:
                 Toast.makeText(getApplicationContext(), "채팅 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                return true;
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
