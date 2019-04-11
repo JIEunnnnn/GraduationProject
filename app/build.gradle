@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.example.owner.project_final"
         minSdkVersion 21
@@ -19,6 +19,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    //채팅 푸시메세지 오류로 인한 추가
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -86,7 +92,15 @@ dependencies {
 
     // 구글 로그인 인증
     implementation 'com.google.android.gms:play-services-auth:16.0.0'
+    
+    //채팅 FCM
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.0'
+
+
+
 
 }
 
 apply plugin: 'com.google.gms.google-services'
+

@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
         Button btn_fourth=(Button)findViewById(R.id.btn_fourth);
         Button btn_fifth=(Button)findViewById(R.id.btn_fifth);
         Button btn_sixth=(Button)findViewById(R.id.btn_sixth);
-
+        Button chatButton=(Button)findViewById(R.id.chatButton);
 
         btn_first.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -271,8 +271,14 @@ public class MainActivity extends AppCompatActivity {
         });
 */
 
-
-
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent().setClass( MainActivity.this,ChattingActivity.class );
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+            }
+        });
     }
 
     // For Toolbar ---------------------------------------------------------------------------------

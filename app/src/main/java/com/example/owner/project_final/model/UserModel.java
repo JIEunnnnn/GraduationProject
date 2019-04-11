@@ -5,6 +5,9 @@ public class UserModel {
     private String email;
     private String password;
     private String address;
+    public String profileImageUrl;
+    public String uid;//채팅하고싶은 사람의 uid를 받아오기 위함
+    public String pushToken;
 
     public UserModel() {
     }
@@ -14,6 +17,7 @@ public class UserModel {
         this.email = email;
         this.password = password;
         this.address = address;
+        //this.uid = uid;
     }
 
     public String getName() {
@@ -48,6 +52,14 @@ public class UserModel {
         this.address = address;
     }
 
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) { this.uid = uid;}
+
+
     @Override
     public String toString() {
         return "UserModel{" +
@@ -57,4 +69,6 @@ public class UserModel {
                 ", address='" + address + '\'' +
                 '}';
     }
+
+
 }

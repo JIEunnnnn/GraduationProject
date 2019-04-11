@@ -1,5 +1,6 @@
 package com.example.owner.project_final;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,6 +15,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.example.owner.project_final.model.NotificationModel;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -28,7 +30,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
         if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            //?Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+
+            String title = remoteMessage.getData().get("title").toString();
+            String text = remoteMessage.getData().get("text").toString();
+            sendNotification(title, text);
+
 
 
             if (true) {
@@ -39,11 +46,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             }
         }
 
-        if (remoteMessage.getNotification() != null) {
+       /*//소현주석
+       if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
 
             sendNotification(remoteMessage.getNotification().getBody());
         }
+        */
 
 
   /*
@@ -80,7 +89,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Log.d(TAG, "10초이내 처리됨");
     }
 
-    private void sendNotification(String messageBody) {
+    private void sendNotification(String title, String text) {
 
 
         Intent intent = new Intent(getApplicationContext(), Tab1Activity.class);
@@ -93,27 +102,32 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         Uri defaultsSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId).setSmallIcon(R.mipmap.ic_launcher).setContentTitle("FCM Message").setContentText(messageBody).setAutoCancel(true).setSound(defaultsSoundUri)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setAutoCancel(true)
+                .setSound(defaultsSoundUri)
+                //소현추가
+                .setPriority(Notification.PRIORITY_HIGH)
                 // .setVibrate(new long[]{1000, 1000})
                 // .setLights(Color.BLUE, 1,1)
                 .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
+        // Since android Oreo notification channel is needed.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-            {
-                String channelName = getString(R.string.default_notification_channel_id);
-
-                NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH);
-                notificationManager.createNotificationChannel(channel);
-
-            }
+            NotificationChannel channel = new NotificationChannel(channelId,
+                    "Channel human readable title",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+        }
 
             notificationManager.notify(0, notificationBuilder.build());
 
         }
     }
-}
+
 
 

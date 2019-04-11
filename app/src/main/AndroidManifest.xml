@@ -135,7 +135,10 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".BluetoothLED"></activity>
+        <activity android:name=".BluetoothLED" />
+        <activity android:name=".ChattingActivity" />
+        <activity android:name=".chat.MessageActivity"></activity>
+
     </application>
 
 </manifest>
