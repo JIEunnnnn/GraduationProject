@@ -30,19 +30,11 @@
             android:layout_below="@+id/roomToolbar"
             android:visibility="gone" />
 
-        <Button
-            android:id="@+id/roomBackBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/roomListView"
-            android:background="@drawable/round_button_02"
-            android:text="이전으로" />
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/roomBackBtn"
+            android:layout_below="@+id/roomListView"
             android:background="#ffffffff"
             android:clipToPadding="false"
             android:paddingBottom="2dp"
