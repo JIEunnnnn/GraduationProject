@@ -1,10 +1,10 @@
 package com.example.owner.project_final;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -22,7 +23,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -30,14 +30,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
-import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -48,7 +49,7 @@ import com.example.owner.project_final.firebase.PublicVariable;
 import com.example.owner.project_final.location.LocationProvider;
 import com.example.owner.project_final.map.MapFragemnt;
 import com.example.owner.project_final.model.PreferenceHelper;
-import com.example.owner.project_final.model.RoomWrite;
+import com.example.owner.project_final.model.FoodWrite;
 import com.example.owner.project_final.volley.VolleyResult;
 import com.example.owner.project_final.volley.VolleyService;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -67,7 +68,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -76,86 +76,71 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RoomWriteActivity extends AppCompatActivity {
+public class FoodWriteActivity extends AppCompatActivity {
     //[오투잡] 2019.04.12 글쓰기 부분 진입 부분 버터나이프 기능적용
     //[오투잡] 2019.04.13 글쓰기 부분 데이터 및 구글맵 셋팅 Firebase 서버로 데이터 add 완료
     //조언  public static Activity roomWriteActivity;  방식으로 Static 을 너무 쓰면 리로스를 많이잡아먹습니다 가급적 satic은 자제해주세요.
     Intent intent;
 
-    @BindView(R.id.room_title_date)
+    @BindView(R.id.food_title_date)
     TextView date;
 
-    @BindView(R.id.room_title)
+    @BindView(R.id.food_title)
     EditText editTitle;
-
-    @BindView(R.id.room_User)
+    @BindView(R.id.food_User)
     EditText editUser;
+    @BindView(R.id.editTradeDate)
+    EditText editTradeDate;
 
-    @BindView(R.id.editStartDay)
-    EditText editStartDay;
+    @BindView(R.id.editTradeTime)
+    EditText editTradeTime;
 
-    @BindView(R.id.editEndDay)
-    EditText editEndDay;
-
-    @BindView(R.id.daily_rental)
-    EditText editEDailyRental;
-
-    @BindView(R.id.room_address)
-    EditText editRoomAddress;
+    @BindView(R.id.food_address)
+    EditText editFoodAddress;
 
     @BindView(R.id.detail_address)
-    EditText editRoomDetailAddress;
+    EditText editFoodDetailAddress;
 
-    @BindView(R.id.room_Contents)
+    @BindView(R.id.food_Contents)
     EditText editDiscription;
 
-    @BindView(R.id.option_room_01)
-    CheckBox checkBoxRoomOption01;
+    @BindView(R.id.option_food_pay)
+    RadioGroup option_food_pay;
 
-    @BindView(R.id.option_room_02)
-    CheckBox checkBoxRoomOption02;
+    @BindView(R.id.option_food_pay_01)
+    RadioButton option_food_pay_01;
 
-    @BindView(R.id.option_room_03)
-    CheckBox checkBoxRoomOption03;
+    @BindView(R.id.option_food_pay_02)
+    RadioButton option_food_pay_02;
 
-    @BindView(R.id.option_room_04)
-    CheckBox checkBoxRoomOption04;
+    @BindView(R.id.option_food_divide)
+    RadioGroup option_food_divide;
 
-    @BindView(R.id.option_room_05)
-    CheckBox checkBoxRoomOption05;
+    @BindView(R.id.option_food_divide_01)
+    RadioButton option_food_divide_01;
 
-
-    @BindView(R.id.option_limit_01)
-    CheckBox checkBoxRoomLimitOption01;
-
-    @BindView(R.id.option_limit_02)
-    CheckBox checkBoxRoomLimitOption02;
-
-    @BindView(R.id.option_limit_03)
-    CheckBox checkBoxRoomLimitOption03;
-
-    @BindView(R.id.option_limit_04)
-    CheckBox checkBoxRoomLimitOption04;
+    @BindView(R.id.option_food_divide_02)
+    RadioButton option_food_divide_02;
 
     @BindView(R.id.photo_1)
-    ImageView roomPhoto1;
+    ImageView foodPhoto1;
 
     @BindView(R.id.default_photo_1)
-    ImageView roomPhotodefalut1;
+    ImageView foodPhotodefalut1;
 
     @BindView(R.id.photo_2)
-    ImageView roomPhoto2;
+    ImageView foodPhoto2;
 
     @BindView(R.id.default_photo_2)
-    ImageView roomPhotodefalut2;
+    ImageView foodPhotodefalut2;
 
     @BindView(R.id.scroll)
     ScrollView scrollView;
 
     public final static int REQUEST_PICK_IMAGE = 0x20;
 
-    private String[] mRoomOption = {"", "", "", "", ""};
-    private String[] mRoomLimitOption = {"", "", "", ""};
+    private String mFoodOption = "";
+    private String mFoodLimitOption = "";
     private String[] photoUri = new String[]{"", ""};
 
     private String latitude;
@@ -179,11 +164,14 @@ public class RoomWriteActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     // ---------------------------------------------------------------------------------------------
 
+    String option_food_pay_result="";
+    String option_food_divide_result="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        L.e("::::RoomWriteActivity");
+        L.e("::::FoodWriteActivity");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_room_write);
+        setContentView(R.layout.activity_food_write);
         ButterKnife.bind(this);
 
         mMapFragemnt = MapFragemnt.getInstance();
@@ -201,17 +189,17 @@ public class RoomWriteActivity extends AppCompatActivity {
         editUser.setText(PreferenceHelper.getNickName(getApplicationContext()));
 
         // For Toolbar -----------------------------------------------------------------------------
-        toolBar = (Toolbar)findViewById(R.id.roomWriteToolbar);
+        toolBar = (Toolbar) findViewById(R.id.foodWriteToolbar);
         setSupportActionBar(toolBar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("단기방대여 글쓰기");
+        actionBar.setTitle("음식주문 글쓰기");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_menu_black_24dp);
         // -----------------------------------------------------------------------------------------
 
         // For Navigation Drawer -------------------------------------------------------------------
-        drawerLayout = (DrawerLayout)findViewById(R.id.activity_room_write);  //각 레이아웃의 가장 큰 DrawerLayout 이름
-        navigationView = (NavigationView)findViewById(R.id.room_write_navigationView);
+        drawerLayout = (DrawerLayout)findViewById(R.id.activity_food_write);  //각 레이아웃의 가장 큰 DrawerLayout 이름
+        navigationView = (NavigationView)findViewById(R.id.food_write_navigationView);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -297,48 +285,37 @@ public class RoomWriteActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.saveButton_room)
+    @OnClick(R.id.saveButton_food)
     public void save(View view) {
-
         if (!validateForm()) {
             return;
         }
 
-        if (checkBoxRoomOption01.isChecked()) {
-            mRoomOption[0] = "냉방/히터";
+        if (option_food_pay_01.isChecked()) {
+            mFoodOption = "전체 1/n";
+            option_food_pay_result = "전체 1/n";
         }
 
-        if (checkBoxRoomOption02.isChecked()) {
-            mRoomOption[1] = "냉장고";
+        if (option_food_pay_02.isChecked()) {
+            mFoodOption = "더치페이";
+            option_food_pay_result = "더치페이";
         }
 
-        if (checkBoxRoomOption03.isChecked()) {
-            mRoomOption[2] = "세탁기";
+//        int payId = option_food_pay.getCheckedRadioButtonId();
+//        option_food_pay_result.findViewById(payId);
+
+        if (option_food_divide_01.isChecked()) {
+            mFoodLimitOption = "전체 1/n";
+            option_food_divide_result = "전체 1/n";
         }
 
-        if (checkBoxRoomOption04.isChecked()) {
-            mRoomOption[3] = "인터넷";
+        if (option_food_divide_02.isChecked()) {
+            mFoodLimitOption = "시킨 메뉴만 픽업";
+            option_food_divide_result = "시킨 메뉴만 픽업";
         }
 
-        if (checkBoxRoomOption05.isChecked()) {
-            mRoomOption[4] = "조리대";
-        }
-
-        if (checkBoxRoomLimitOption01.isChecked()) {
-            mRoomLimitOption[0] = "남자가능";
-        }
-
-        if (checkBoxRoomLimitOption02.isChecked()) {
-            mRoomLimitOption[1] = "여자가능";
-        }
-
-        if (checkBoxRoomLimitOption03.isChecked()) {
-            mRoomLimitOption[2] = "흡연불가";
-        }
-
-        if (checkBoxRoomLimitOption04.isChecked()) {
-            mRoomLimitOption[3] = "애완동물 불가";
-        }
+//        int divideId = option_food_divide.getCheckedRadioButtonId();
+//        option_food_divide_result.findViewById(divideId);
 
         final ArrayList<Uri> storePhotoArray = new ArrayList<>();
         int i = 0;
@@ -350,17 +327,15 @@ public class RoomWriteActivity extends AppCompatActivity {
         }
 
         showProgressDialog("업로드 중입니다.");
-        String autoKey = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_ROOMS).push().getKey();
-        final String storageKey = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_ROOMS).push().getKey();
-        RoomWrite roomWrite = new RoomWrite(FirebaseApi.getCurrentUser().getUid(), editTitle.getText().toString(), editUser.getText().toString(),
-                editStartDay.getText().toString(), editEndDay.getText().toString(), editEDailyRental.getText().toString(),
-                mRoomOption[0], mRoomOption[1], mRoomOption[2], mRoomOption[3], mRoomOption[4],
-                mRoomLimitOption[0], mRoomLimitOption[1], mRoomLimitOption[2], mRoomLimitOption[3],
-                editRoomAddress.getText().toString(), editRoomDetailAddress.getText().toString(), storageKey, editDiscription.getText().toString(), latitude, longitude, postingDate, autoKey);
+        String autoKey = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_FOODS).push().getKey();
+        final String storageKey = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_FOODS).push().getKey();
+        FoodWrite foodWrite = new FoodWrite(FirebaseApi.getCurrentUser().getUid(), editTitle.getText().toString(), editUser.getText().toString(),
+                editTradeDate.getText().toString(), editTradeTime.getText().toString(), option_food_pay_result, option_food_divide_result,
+                editFoodAddress.getText().toString(), editFoodDetailAddress.getText().toString(), storageKey, editDiscription.getText().toString(), latitude, longitude, postingDate, autoKey);
 
         L.e("::::::auto key : " + autoKey);
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child(PublicVariable.FIREBASE_CHILD_ROOMS).child(FirebaseApi.getCurrentUser().getUid()).child(autoKey).setValue(roomWrite).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child(PublicVariable.FIREBASE_CHILD_FOODS).child(FirebaseApi.getCurrentUser().getUid()).child(autoKey).setValue(foodWrite).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
@@ -371,26 +346,27 @@ public class RoomWriteActivity extends AppCompatActivity {
                                 hideProgressDialog();
                                 int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.95);
                                 int height = WindowManager.LayoutParams.WRAP_CONTENT;
-                                new AlertDialog.Builder(RoomWriteActivity.this, R.style.Theme_AppCompat_Light_Dialog)
+                                new AlertDialog.Builder(FoodWriteActivity.this, R.style.Theme_AppCompat_Light_Dialog)
                                         .setTitle("알림")
                                         .setMessage("업로드가 완료 되었습니다. ")
                                         .setCancelable(false)
                                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
+                                                Toast.makeText(getApplicationContext(),  "onClick", Toast.LENGTH_LONG).show();
                                                 finish();
                                             }
                                         }).setOnDismissListener(new DialogInterface.OnDismissListener() {
                                     @Override
                                     public void onDismiss(DialogInterface dialog) {
-
+                                        Toast.makeText(getApplicationContext(),  "onDismiss", Toast.LENGTH_LONG).show();
                                     }
                                 }).show().getWindow().setLayout(width, height);
                             }
 
                             @Override
                             public void onFailure(Exception e) {
-
+                                Toast.makeText(getApplicationContext(),  "onFailure", Toast.LENGTH_LONG).show();
                             }
                         });
                     }
@@ -399,9 +375,9 @@ public class RoomWriteActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick(R.id.cancelButton_room)
+    @OnClick(R.id.cancelButton_food)
     public void cancle(View view) {
-        intent = new Intent().setClass( getApplicationContext(), RoomActivity.class );
+        intent = new Intent().setClass( getApplicationContext(), FoodActivity.class );
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
@@ -413,7 +389,7 @@ public class RoomWriteActivity extends AppCompatActivity {
             showSnakbar("GPS 장치를 활성화 해주세요.\n활성화 후 다시 시도해주세요.", 1500);
             return;
         }
-        Dexter.withActivity(RoomWriteActivity.this).withPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION).withListener(new MultiplePermissionsListener() {
+        Dexter.withActivity(FoodWriteActivity.this).withPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION).withListener(new MultiplePermissionsListener() {
             @Override
             public void onPermissionsChecked(MultiplePermissionsReport report) {
                 if (report.areAllPermissionsGranted()) {
@@ -442,7 +418,7 @@ public class RoomWriteActivity extends AppCompatActivity {
                                                         L.e("::::address : " + address);
                                                         break;
                                                     }
-                                                    editRoomAddress.setText(address);
+                                                    editFoodAddress.setText(address);
                                                     mMapFragemnt.onMapUpdate();
                                                 } catch (Exception e) {
 
@@ -482,7 +458,7 @@ public class RoomWriteActivity extends AppCompatActivity {
         }).check();
     }
 
-    @OnClick(R.id.editStartDay)
+    @OnClick(R.id.editTradeDate)
     public void setStartDay(View view) {
         L.e("::::setStartDay");
         if (!isFinishing()) {
@@ -491,10 +467,10 @@ public class RoomWriteActivity extends AppCompatActivity {
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog dialog = new DatePickerDialog(RoomWriteActivity.this, new DatePickerDialog.OnDateSetListener() {
+            DatePickerDialog dialog = new DatePickerDialog(FoodWriteActivity.this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    editStartDay.setText(getResultDay(year, month, dayOfMonth));
+                    editTradeDate.setText(getResultDay(year, month, dayOfMonth));
                 }
             }, year, month, day);
 
@@ -505,21 +481,20 @@ public class RoomWriteActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.editEndDay)
+    @OnClick(R.id.editTradeTime)
     public void setEndDay(View view) {
-        L.e("::::setEndDay");
+        L.e("::::setTradeTime");
         if (!isFinishing()) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog dialog = new DatePickerDialog(RoomWriteActivity.this, new DatePickerDialog.OnDateSetListener() {
+            int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+            int minute = calendar.get(Calendar.MINUTE);
+            TimePickerDialog dialog = new TimePickerDialog(FoodWriteActivity.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    editEndDay.setText(getResultDay(year, month, dayOfMonth));
+                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                    editTradeTime.setText(hourOfDay + ":" + minute);
                 }
-            }, year, month, day);
+            }, hourOfDay, minute, false);
 
             dialog.show();
         }
@@ -589,40 +564,33 @@ public class RoomWriteActivity extends AppCompatActivity {
             editUser.setError(null);
         }
 
-        if (TextUtils.isEmpty(editStartDay.getText().toString())) {
-            editStartDay.setError("Required");
+        if (TextUtils.isEmpty(editTradeDate.getText().toString())) {
+            editTradeDate.setError("Required");
             result = false;
         } else {
-            editStartDay.setError(null);
+            editTradeDate.setError(null);
         }
 
-        if (TextUtils.isEmpty(editEndDay.getText().toString())) {
-            editEndDay.setError("Required");
+        if (TextUtils.isEmpty(editTradeTime.getText().toString())) {
+            editTradeTime.setError("Required");
             result = false;
         } else {
-            editEndDay.setError(null);
+            editTradeTime.setError(null);
         }
 
 
-        if (TextUtils.isEmpty(editRoomAddress.getText().toString())) {
-            editRoomAddress.setError("Required");
+        if (TextUtils.isEmpty(editFoodAddress.getText().toString())) {
+            editFoodAddress.setError("Required");
             result = false;
         } else {
-            editRoomAddress.setError(null);
+            editFoodAddress.setError(null);
         }
 
-        if (TextUtils.isEmpty(editRoomDetailAddress.getText().toString())) {
-            editRoomDetailAddress.setError("Required");
+        if (TextUtils.isEmpty(editFoodDetailAddress.getText().toString())) {
+            editFoodDetailAddress.setError("Required");
             result = false;
         } else {
-            editRoomDetailAddress.setError(null);
-        }
-
-        if (TextUtils.isEmpty(editEDailyRental.getText().toString())) {
-            editEDailyRental.setError("Required");
-            result = false;
-        } else {
-            editEDailyRental.setError(null);
+            editFoodDetailAddress.setError(null);
         }
 
         if (TextUtils.isEmpty(editDiscription.getText().toString())) {
@@ -639,7 +607,7 @@ public class RoomWriteActivity extends AppCompatActivity {
 
     @OnClick(R.id.photo_view_1)
     public void setPhotoClick_01(View view) {
-        Dexter.withActivity(RoomWriteActivity.this).withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE).withListener(new MultiplePermissionsListener() {
+        Dexter.withActivity(FoodWriteActivity.this).withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE).withListener(new MultiplePermissionsListener() {
             @Override
             public void onPermissionsChecked(MultiplePermissionsReport report) {
                 if (report.areAllPermissionsGranted()) {
@@ -659,7 +627,7 @@ public class RoomWriteActivity extends AppCompatActivity {
 
     @OnClick(R.id.photo_view_2)
     public void setPhotoClick_02(View view) {
-        Dexter.withActivity(RoomWriteActivity.this).withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE).withListener(new MultiplePermissionsListener() {
+        Dexter.withActivity(FoodWriteActivity.this).withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE).withListener(new MultiplePermissionsListener() {
             @Override
             public void onPermissionsChecked(MultiplePermissionsReport report) {
                 if (report.areAllPermissionsGranted()) {
@@ -696,13 +664,13 @@ public class RoomWriteActivity extends AppCompatActivity {
                     photoUri[mPhotoPosition] = uri.toString();
 
                     if (mPhotoPosition == 0) {
-                        roomPhoto1.setVisibility(View.VISIBLE);
-                        roomPhotodefalut1.setVisibility(View.GONE);
-                        ImageLoaderHelper.setProfileImage(getApplicationContext(), uri, roomPhoto1, "");
+                        foodPhoto1.setVisibility(View.VISIBLE);
+                        foodPhotodefalut1.setVisibility(View.GONE);
+                        ImageLoaderHelper.setProfileImage(getApplicationContext(), uri, foodPhoto1, "");
                     } else {
-                        roomPhoto2.setVisibility(View.VISIBLE);
-                        roomPhotodefalut2.setVisibility(View.GONE);
-                        ImageLoaderHelper.setProfileImage(getApplicationContext(), uri, roomPhoto2, "");
+                        foodPhoto2.setVisibility(View.VISIBLE);
+                        foodPhotodefalut2.setVisibility(View.GONE);
+                        ImageLoaderHelper.setProfileImage(getApplicationContext(), uri, foodPhoto2, "");
                     }
 
                 } catch (Exception e) {
@@ -724,7 +692,7 @@ public class RoomWriteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         //return super.onOptionsItemSelected(item);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.activity_room_write);  //각자에 맞는 레이아웃의 가장 겉 DrawerLayout 이용할 것
+        drawerLayout = (DrawerLayout) findViewById(R.id.activity_food_write);  //각자에 맞는 레이아웃의 가장 겉 DrawerLayout 이용할 것
 
         switch (item.getItemId()) {
             case R.id.MainButton:

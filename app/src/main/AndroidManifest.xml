@@ -42,12 +42,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RoomDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".RoomWriteActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -75,9 +69,20 @@
             android:name=".FoodActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".FoodDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FoodWriteActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".RoomActivity"
             android:screenOrientation="portrait" />
-        <!-- <activity android:name=".RoomWriteActivity" /> -->
+        <activity
+            android:name=".RoomDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RoomWriteActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".HobbyActivity"
             android:screenOrientation="portrait" />

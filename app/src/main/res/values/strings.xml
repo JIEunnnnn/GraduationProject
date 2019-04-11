@@ -82,4 +82,6 @@
     <string name="tradeLocation">거래장소</string>
     <string name="search">검색</string>
     <string name="price">won</string>
+    <string name="tradeDate">거래 날짜</string>
+    <string name="tradeTime">거래 시간</string>
 </resources>

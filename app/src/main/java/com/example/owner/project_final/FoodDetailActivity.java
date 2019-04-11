@@ -29,6 +29,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +45,7 @@ import com.example.owner.project_final.map.MapFragemnt;
 import com.example.owner.project_final.model.Comment;
 import com.example.owner.project_final.model.PreferenceHelper;
 import com.example.owner.project_final.model.Reply;
-import com.example.owner.project_final.model.RoomWrite;
+import com.example.owner.project_final.model.FoodWrite;
 import com.example.owner.project_final.model.UserModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -65,60 +67,56 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RoomDetailActivity extends AppCompatActivity {
+public class FoodDetailActivity extends AppCompatActivity {
     //[오투잡] 2019.04.13 글쓰기 상세부분 구현
 
-    @BindView(R.id.room_title_date)
+    @BindView(R.id.food_title_date)
     TextView date;
 
-    @BindView(R.id.room_title)
+    @BindView(R.id.food_title)
     TextView tvTitle;
-    @BindView(R.id.room_User)
+
+    @BindView(R.id.food_User)
     TextView tvUser;
-    @BindView(R.id.editStartDay)
-    TextView tvStartDay;
-    @BindView(R.id.editEndDay)
-    TextView tvEndDay;
 
-    @BindView(R.id.daily_rental)
-    TextView tvEDailyRental;
+    @BindView(R.id.editTradeDate)
+    TextView tvTradeDate;
 
-    @BindView(R.id.room_address)
-    TextView tvRoomAddress;
+    @BindView(R.id.editTradeTime)
+    TextView tvTradeTime;
+
+    @BindView(R.id.food_address)
+    TextView tvFoodAddress;
 
     @BindView(R.id.detail_address)
-    TextView tvRoomDetailAddress;
+    TextView tvFoodDetailAddress;
 
-    @BindView(R.id.room_Contents)
+    @BindView(R.id.food_Contents)
     TextView tvDiscription;
 
-    @BindView(R.id.option_room_01)
-    CheckBox checkBoxRoomOption01;
+    @BindView(R.id.option_food_pay)
+    RadioGroup option_food_pay;
 
-    @BindView(R.id.option_room_02)
-    CheckBox checkBoxRoomOption02;
+    @BindView(R.id.option_food_pay_01)
+    RadioButton option_food_pay_01;
 
-    @BindView(R.id.option_room_03)
-    CheckBox checkBoxRoomOption03;
+    @BindView(R.id.option_food_pay_02)
+    RadioButton option_food_pay_02;
 
-    @BindView(R.id.option_room_04)
-    CheckBox checkBoxRoomOption04;
+    @BindView(R.id.option_food_divide)
+    RadioGroup option_food_divide;
 
-    @BindView(R.id.option_room_05)
-    CheckBox checkBoxRoomOption05;
+    @BindView(R.id.option_food_divide_01)
+    RadioButton option_food_divide_01;
 
+    @BindView(R.id.option_food_divide_02)
+    RadioButton option_food_divide_02;
 
-    @BindView(R.id.option_limit_01)
-    CheckBox checkBoxRoomLimitOption01;
+    @BindView(R.id.photo_1)
+    ImageView ivFoodPhoto1;
 
-    @BindView(R.id.option_limit_02)
-    CheckBox checkBoxRoomLimitOption02;
-
-    @BindView(R.id.option_limit_03)
-    CheckBox checkBoxRoomLimitOption03;
-
-    @BindView(R.id.option_limit_04)
-    CheckBox checkBoxRoomLimitOption04;
+    @BindView(R.id.photo_2)
+    ImageView ivFoodPhoto2;
 
     @BindView(R.id.unknown_name)
     CheckBox checkBoxunknownName;
@@ -131,17 +129,9 @@ public class RoomDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler_comments)
     RecyclerView recyclerView;
-
-
-    @BindView(R.id.photo_1)
-    ImageView ivRoomPhoto1;
-
-    @BindView(R.id.photo_2)
-    ImageView ivRoomPhoto2;
-
     private MapFragemnt mMapFragemnt;
     private AlertDialog dialog;
-    RoomWrite mRoomWrite;
+    FoodWrite mFoodWrite;
     CommentAdapter mCommentAdapter;
 
     String[] photoUri = {"", ""};
@@ -159,69 +149,51 @@ public class RoomDetailActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     // ---------------------------------------------------------------------------------------------
 
+    String option_food_pay_result;
+    String option_food_divide_result;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_room_detail);
+        setContentView(R.layout.activity_food_detail);
         ButterKnife.bind(this);
 
         Intent intent_detail = getIntent();
         Bundle bundle = new Bundle();
         if (intent_detail != null) {
-            mRoomWrite = (RoomWrite) intent_detail.getSerializableExtra("RoomWrite");
-            L.e("::::::시리얼 라이저블 : " + mRoomWrite.toString());
+            mFoodWrite = (FoodWrite) intent_detail.getSerializableExtra("FoodWrite");
+            L.e("::::::시리얼 라이저블 : " + mFoodWrite.toString());
 
-            tvTitle.setText(mRoomWrite.getTitle());
+            option_food_pay_result = mFoodWrite.getoption_food_pay_result();
+            option_food_divide_result = mFoodWrite.getoption_food_divide_result();
 
-            tvUser.setText(mRoomWrite.getWriter());
-            date.setText(mRoomWrite.getPostingDate());
-            tvStartDay.setText(mRoomWrite.getRentalStartTime());
-            tvEndDay.setText(mRoomWrite.getRentalEndTime());
-            tvEDailyRental.setText(mRoomWrite.getRentalFee());
-            tvRoomAddress.setText(mRoomWrite.getRoomaddress());
-            tvRoomDetailAddress.setText(mRoomWrite.getDescription());
-            tvDiscription.setText(mRoomWrite.getDescription());
+            tvTitle.setText(mFoodWrite.getTitle());
 
-            if (!mRoomWrite.getRoomOption1().equalsIgnoreCase("")) {
-                checkBoxRoomOption01.setChecked(true);
+            tvUser.setText(mFoodWrite.getWriter());
+            date.setText(mFoodWrite.getPostingDate());
+            tvTradeDate.setText(mFoodWrite.geteditTradeDate());
+            tvTradeTime.setText(mFoodWrite.geteditTradeTime());
+            //option_food_pay_result.setText(mFoodWrite.getoption_food_pay_result());
+            //option_food_divide_result.setText(mFoodWrite.getoption_food_divide_result());
+            tvFoodAddress.setText(mFoodWrite.getFoodaddress());
+            tvFoodDetailAddress.setText(mFoodWrite.getDescription());
+            tvDiscription.setText(mFoodWrite.getDescription());
+
+            if (mFoodWrite.getoption_food_pay_01() == mFoodWrite.getoption_food_pay_result()) {
+                option_food_pay_01.setChecked(true);
+            } else {
+                option_food_pay_02.setChecked(true);
             }
 
-            if (!mRoomWrite.getRoomOption2().equalsIgnoreCase("")) {
-                checkBoxRoomOption02.setChecked(true);
-            }
-
-            if (!mRoomWrite.getRoomOption3().equalsIgnoreCase("")) {
-                checkBoxRoomOption03.setChecked(true);
-            }
-
-            if (!mRoomWrite.getRoomOption4().equalsIgnoreCase("")) {
-                checkBoxRoomOption04.setChecked(true);
-            }
-
-            if (!mRoomWrite.getRoomOption5().equalsIgnoreCase("")) {
-                checkBoxRoomOption05.setChecked(true);
-            }
-
-
-            if (!mRoomWrite.getRoomLimitOption1().equalsIgnoreCase("")) {
-                checkBoxRoomLimitOption01.setChecked(true);
-            }
-
-            if (!mRoomWrite.getRoomLimitOption2().equalsIgnoreCase("")) {
-                checkBoxRoomLimitOption02.setChecked(true);
-            }
-
-            if (!mRoomWrite.getRoomLimitOption3().equalsIgnoreCase("")) {
-                checkBoxRoomLimitOption03.setChecked(true);
-            }
-
-            if (!mRoomWrite.getRoomLimitOption4().equalsIgnoreCase("")) {
-                checkBoxRoomLimitOption04.setChecked(true);
+            if (mFoodWrite.getoption_food_divide_01() == mFoodWrite.getoption_food_divide_result()) {
+                option_food_divide_01.setChecked(true);
+            } else {
+                option_food_divide_02.setChecked(true);
             }
 
             mMapFragemnt = MapFragemnt.getInstance();
-            bundle.putDouble(PublicVariable.LATITUDE, Double.valueOf(mRoomWrite.getLatitude()));
-            bundle.putDouble(PublicVariable.LONGITUDE, Double.valueOf(mRoomWrite.getLongitude()));
+            bundle.putDouble(PublicVariable.LATITUDE, Double.valueOf(mFoodWrite.getLatitude()));
+            bundle.putDouble(PublicVariable.LONGITUDE, Double.valueOf(mFoodWrite.getLongitude()));
             mMapFragemnt.setArguments(bundle);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -240,7 +212,7 @@ public class RoomDetailActivity extends AppCompatActivity {
                     if (dialog != null && dialog.isShowing()) {
                         dialog.dismiss();
                     }
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RoomDetailActivity.this/*, R.style.Theme_AppCompat_Light_Dialog*/);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(FoodDetailActivity.this/*, R.style.Theme_AppCompat_Light_Dialog*/);
                     builder.setTitle("답글 달기");
                     LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
                     View view = inflater.inflate(R.layout.dialog_reply, null);
@@ -256,7 +228,7 @@ public class RoomDetailActivity extends AppCompatActivity {
                                 return;
                             }
 
-                            DatabaseReference req = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_ROOMS_COMMENT).child(item.getNodeId()).child(item.getChildId());
+                            DatabaseReference req = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_FOODS_COMMENT).child(item.getNodeId()).child(item.getChildId());
                             req.runTransaction(new Transaction.Handler() {
                                 @NonNull
                                 @Override
@@ -267,7 +239,7 @@ public class RoomDetailActivity extends AppCompatActivity {
                                     }
 
                                     Map<String, Reply> replyHashMap = comment.getReplyMap();
-                                    String key = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_ROOMS_COMMENT).push().getKey();
+                                    String key = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_FOODS_COMMENT).push().getKey();
                                     replyHashMap.put(key, new Reply(FirebaseApi.getCurrentUser().getUid(), false, PreferenceHelper.getNickName(getApplicationContext()), new SimpleDateFormat("yyyy/MM/dd").format(System.currentTimeMillis())
                                             , editContent.getText().toString(), key));
                                     comment.setReplyMap(replyHashMap);
@@ -305,17 +277,17 @@ public class RoomDetailActivity extends AppCompatActivity {
         }
 
         // For Toolbar -----------------------------------------------------------------------------
-        toolBar = (Toolbar)findViewById(R.id.roomDetailToolbar);
+        toolBar = (Toolbar)findViewById(R.id.foodDetailToolbar);
         setSupportActionBar(toolBar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("단기방대여 글보기");
+        actionBar.setTitle("음식주문 글보기");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_menu_black_24dp);
         // -----------------------------------------------------------------------------------------
 
         // For Navigation Drawer -------------------------------------------------------------------
-        drawerLayout = (DrawerLayout)findViewById(R.id.activity_room_detail);  //각 레이아웃의 가장 큰 DrawerLayout 이름
-        navigationView = (NavigationView)findViewById(R.id.navigationView_room_detail);
+        drawerLayout = (DrawerLayout)findViewById(R.id.activity_food_detail);  //각 레이아웃의 가장 큰 DrawerLayout 이름
+        navigationView = (NavigationView)findViewById(R.id.navigationView_food_detail);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -402,7 +374,7 @@ public class RoomDetailActivity extends AppCompatActivity {
 
     public void onLoadComment() {
 
-        DatabaseReference req = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_ROOMS_COMMENT).child(mRoomWrite.getId());
+        DatabaseReference req = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_FOODS_COMMENT).child(mFoodWrite.getId());
         req.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -420,7 +392,7 @@ public class RoomDetailActivity extends AppCompatActivity {
             }
         });
 
-        setVaildFirebaseStorage(mRoomWrite.getAddedByUser(), mRoomWrite.getPhotoID());
+        setVaildFirebaseStorage(mFoodWrite.getAddedByUser(), mFoodWrite.getPhotoID());
 
     }
 
@@ -438,9 +410,9 @@ public class RoomDetailActivity extends AppCompatActivity {
                 UserModel userModel = dataSnapshot.getValue(UserModel.class);
                 if (userModel != null) {
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
-                    DatabaseReference req = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_ROOMS_COMMENT).child(mRoomWrite.getId());
+                    DatabaseReference req = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_FOODS_COMMENT).child(mFoodWrite.getId());
                     String id = req.push().getKey();
-                    Comment comment = new Comment(FirebaseApi.getCurrentUser().getUid(), checkBoxunknownName.isChecked(), userModel.getName(), simpleDateFormat.format(System.currentTimeMillis()), editComment.getText().toString(), mRoomWrite.getId(), id, false);
+                    Comment comment = new Comment(FirebaseApi.getCurrentUser().getUid(), checkBoxunknownName.isChecked(), userModel.getName(), simpleDateFormat.format(System.currentTimeMillis()), editComment.getText().toString(), mFoodWrite.getId(), id, false);
                     req.child(id).setValue(comment);
                     mCommentAdapter.insertData(comment);
                     editComment.setText("");
@@ -498,7 +470,7 @@ public class RoomDetailActivity extends AppCompatActivity {
         }
 
         for (int index = 0; index < 2; index++) {
-            StorageReference storageRef = storage.getReferenceFromUrl(PublicVariable.FIREBASE_STORAGE).child(PublicVariable.FIREBASE_STORAGE_ROOMS).child(key).child("roomImage" + (index + 1) + ".jpg").child(storageKey);
+            StorageReference storageRef = storage.getReferenceFromUrl(PublicVariable.FIREBASE_STORAGE).child(PublicVariable.FIREBASE_STORAGE_FOODS).child(key).child("foodImage" + (index + 1) + ".jpg").child(storageKey);
             final int success = index;
             storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
@@ -508,7 +480,7 @@ public class RoomDetailActivity extends AppCompatActivity {
                     } else {
                         photoUri[1] = uri.toString();
                     }
-                    ImageLoaderHelper.setProfileImage(getApplicationContext(), uri, success == 0 ? ivRoomPhoto1 : ivRoomPhoto2, "");
+                    ImageLoaderHelper.setProfileImage(getApplicationContext(), uri, success == 0 ? ivFoodPhoto1 : ivFoodPhoto2, "");
                 }
             });
         }
@@ -527,7 +499,7 @@ public class RoomDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         //return super.onOptionsItemSelected(item);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.activity_room_detail);  //각자에 맞는 레이아웃의 가장 겉 DrawerLayout 이용할 것
+        drawerLayout = (DrawerLayout) findViewById(R.id.activity_food_detail);  //각자에 맞는 레이아웃의 가장 겉 DrawerLayout 이용할 것
 
         switch (item.getItemId()) {
             case R.id.MainButton:

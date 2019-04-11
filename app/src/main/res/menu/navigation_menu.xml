@@ -22,7 +22,7 @@
                 android:title=" ─ 단기방대여 바로가기" />
             <item
                 android:id="@+id/navi_tab3_3"
-                android:title=" ─ 음식배달 바로가기" />
+                android:title=" ─ 음식주문 바로가기" />
             <item
                 android:id="@+id/navi_tab3_4"
                 android:title=" ─ 취미여가 바로가기" />

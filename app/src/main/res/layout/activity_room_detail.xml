@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_room_write">
+    android:id="@+id/activity_room_detail">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         <android.support.v7.widget.Toolbar
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/roomWriteToolbar"
+            android:id="@+id/roomDetailToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -26,18 +26,17 @@
         <ScrollView
             android:id="@+id/scroll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_height="match_parent"
             android:layout_alignParentStart="true"
-            android:layout_below="@id/roomWriteToolbar"
+            android:layout_below="@+id/roomDetailToolbar"
             android:fillViewport="true"
             android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="16dp"
                 android:orientation="vertical">
-
 
                 <LinearLayout
                     android:id="@+id/post_title_room"
@@ -60,7 +59,7 @@
                         android:orientation="horizontal"
                         android:weightSum="1">
 
-                        <EditText
+                        <TextView
                             android:id="@+id/room_title"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -85,6 +84,7 @@
                     android:id="@+id/post_writer_room"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -95,9 +95,8 @@
                         android:textSize="11dp"
                         android:textStyle="bold" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/room_User"
-                        android:enabled="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/cname" />
@@ -107,6 +106,7 @@
                     android:id="@+id/post_period_room"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -123,7 +123,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <EditText
+                        <TextView
                             android:id="@+id/editStartDay"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -142,7 +142,7 @@
                             android:textAlignment="center" />
 
 
-                        <EditText
+                        <TextView
                             android:id="@+id/editEndDay"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -159,6 +159,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -169,9 +170,9 @@
                         android:textSize="11dp"
                         android:textStyle="bold" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/daily_rental"
-                        android:layout_width="100dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -179,6 +180,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -200,6 +202,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1.2"
                             android:checked="false"
+                            android:clickable="false"
                             android:text="냉방/히터"
                             android:textSize="9dp" />
 
@@ -209,6 +212,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:checked="false"
+                            android:clickable="false"
                             android:text="냉장고"
                             android:textSize="9dp" />
 
@@ -218,6 +222,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:checked="false"
+                            android:clickable="false"
                             android:text="세탁기"
                             android:textSize="9dp" />
 
@@ -227,6 +232,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:checked="false"
+                            android:clickable="false"
                             android:text="인터넷"
                             android:textSize="9dp" />
 
@@ -236,6 +242,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:checked="false"
+                            android:clickable="false"
                             android:text="조리대"
                             android:textSize="9dp" />
 
@@ -247,6 +254,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -268,6 +276,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:checked="false"
+                            android:clickable="false"
                             android:text="남자가능"
                             android:textSize="9dp" />
 
@@ -277,6 +286,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:checked="false"
+                            android:clickable="false"
                             android:text="여자가능"
                             android:textSize="9dp" />
 
@@ -286,6 +296,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:checked="false"
+                            android:clickable="false"
                             android:text="흡연불가"
                             android:textSize="9dp" />
 
@@ -295,6 +306,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1.2"
                             android:checked="false"
+                            android:clickable="false"
                             android:text="애완동물 불가"
                             android:textSize="9dp" />
 
@@ -306,6 +318,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -323,24 +336,11 @@
                         android:orientation="horizontal"
                         android:weightSum="1">
 
-                        <EditText
+                        <TextView
                             android:id="@+id/room_address"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.7" />
-
-                        <Button
-                            android:id="@+id/request_gps"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.2"
-                            android:background="@drawable/round_button_06"
-                            android:gravity="center"
-                            android:text="검색"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textColor="#ffffff"
-                            android:textSize="12dp"
-                            android:textStyle="bold" />
 
                     </LinearLayout>
 
@@ -350,6 +350,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -360,7 +361,7 @@
                         android:textSize="11dp"
                         android:textStyle="bold" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/detail_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -370,6 +371,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <View
@@ -387,7 +389,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -420,19 +422,8 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentTop="true"
                                 android:scaleType="centerCrop"
-                                android:visibility="invisible" />
+                                android:visibility="visible"></com.example.owner.project_final.firebase.SqaureImageView>
 
-                            <com.example.owner.project_final.firebase.SqaureImageView
-                                android:id="@+id/default_photo_1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
-                                android:layout_centerInParent="true"
-                                android:layout_centerVertical="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:background="@drawable/ic_add_black_24dp"
-                                android:scaleType="centerCrop"/>
                         </RelativeLayout>
 
 
@@ -452,19 +443,8 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentTop="true"
                                 android:scaleType="centerCrop"
-                                android:visibility="invisible"></com.example.owner.project_final.firebase.SqaureImageView>
+                                android:visibility="visible"></com.example.owner.project_final.firebase.SqaureImageView>
 
-                            <com.example.owner.project_final.firebase.SqaureImageView
-                                android:id="@+id/default_photo_2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
-                                android:layout_centerInParent="true"
-                                android:layout_centerVertical="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:background="@drawable/ic_add_black_24dp"
-                                android:scaleType="centerCrop"></com.example.owner.project_final.firebase.SqaureImageView>
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -484,8 +464,9 @@
                     android:id="@+id/post_detail_room"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -495,7 +476,7 @@
                         android:textSize="11dp"
                         android:textStyle="bold" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/room_Contents"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
@@ -506,36 +487,57 @@
 
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/comment_form"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginVertical="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/saveButton_room"
-                        android:layout_width="wrap_content"
+                    <CheckBox
+                        android:id="@+id/unknown_name"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:background="@drawable/round_button_01"
-                        android:text="@string/save" />
+                        android:layout_weight="0.2"
+                        android:checked="false"
+                        android:text="익명"
+                        android:textSize="9dp" />
+
+                    <EditText
+                        android:id="@+id/field_comment_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="0.8"
+                        android:background="@drawable/round_square_02"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:textSize="12dp" />
 
                     <Button
-                        android:id="@+id/cancelButton_room"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/button_post_comment"
+                        style="@style/Base.Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:background="@drawable/round_button_01"
-                        android:text="@string/cancle" />
+                        android:layout_weight="0.2"
+                        android:layout_marginLeft="8dp"
+                        android:background="@drawable/round_button_06"
+                        android:text="등록" />
+
                 </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_comments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_marginTop="10dp" />
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>
 
-
     <!-- For Navigation Bar -->
     <android.support.design.widget.NavigationView
-        android:id="@+id/room_write_navigationView"
+        android:id="@+id/navigationView_room_detail"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
