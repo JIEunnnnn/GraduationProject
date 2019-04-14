@@ -32,81 +32,58 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCy58b-slKn-lA_ynCel2CL_Uv2Wsxovgs" />
 
-        <activity
-            android:name=".LoginActivity"
+        <activity android:name=".LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".checkbox_tab1"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Tab1Activity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Tab3Activity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Tab2Activity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".PurchaseActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".PurchaseWriteActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".FoodActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".FoodDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".FoodWriteActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".RoomActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".RoomDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".RoomWriteActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".HobbyActivity"
-            android:screenOrientation="portrait" />
+
+        <activity android:name=".Tab1Activity" />
+        <activity android:name=".checkbox_tab1" />
+        <activity android:name=".Tab2Activity" />
+        <activity android:name=".Tab3Activity" />
+
+        <activity android:name=".PurchaseActivity" />
+        <activity android:name=".PurchaseWriteActivity" />
+        <activity android:name=".PurchaseDetailActivity" />
+
+        <activity android:name=".FoodActivity" />
+        <activity android:name=".FoodWriteActivity" />
+        <activity android:name=".FoodDetailActivity" />
+
+        <activity android:name=".RoomActivity" />
+        <activity android:name=".RoomWriteActivity" />
+        <activity android:name=".RoomDetailActivity" />
+
+        <activity android:name=".HobbyActivity" />
+        <activity android:name=".HobbyWriteActivity" />
+        <activity android:name=".HobbyDetailActivity" />
+
+        <activity android:name=".FreeActivity" />
+        <activity android:name=".FreeWriteActivity" />
+        <activity android:name=".freeDetailActivity" />
+        <activity android:name=".FreeredeActivity" />
+        <activity android:name=".FreereviseActivity" />
+
+        <activity android:name=".BluetoothLED" />
+        <activity android:name=".ChattingActivity" />
+        <activity android:name=".chat.MessageActivity" />
         <activity
             android:name=".MypageActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".WriteActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".FreeActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".FreeWriteActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".freeDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".FreeredeActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".FreereviseActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".PhotoZoomActivity"
             android:screenOrientation="portrait" />
@@ -139,12 +116,6 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
-        <activity android:name=".BluetoothLED" />
-        <activity android:name=".ChattingActivity" />
-        <activity android:name=".chat.MessageActivity" />
-        <activity android:name=".HobbyWriteActivity" />
-        <activity android:name=".HobbyDetailActivity"></activity>
     </application>
 
 </manifest>

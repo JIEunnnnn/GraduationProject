@@ -159,7 +159,7 @@ public class BluetoothLED extends AppCompatActivity {
         });
 
         // For Toolbar -----------------------------------------------------------------------------
-        toolBar = (Toolbar)findViewById(R.id.bluetoothToolbar);
+        toolBar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("무드등 제어");
@@ -168,8 +168,8 @@ public class BluetoothLED extends AppCompatActivity {
         // -----------------------------------------------------------------------------------------
 
         // For Navigation Drawer -------------------------------------------------------------------
-        drawerLayout = (DrawerLayout)findViewById(R.id.activity_bluetooth_led);  //각 레이아웃의 가장 큰 DrawerLayout 이름
-        navigationView = (NavigationView)findViewById(R.id.navigationView_bluetooth_led);
+        drawerLayout = (DrawerLayout)findViewById(R.id.activity);  //각 레이아웃의 가장 큰 DrawerLayout 이름
+        navigationView = (NavigationView)findViewById(R.id.navigationView);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -210,7 +210,6 @@ public class BluetoothLED extends AppCompatActivity {
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
-/*
                     case R.id.navi_tab3_3:    //음식주문 게시판
                         Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
@@ -229,14 +228,12 @@ public class BluetoothLED extends AppCompatActivity {
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
-*/
                     case R.id.navi_tab4:    //무드등
                         Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent = new Intent().setClass( getApplicationContext(), BluetoothLED.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
-/*
                     case R.id.navi_tab5:    //음성변조
                         Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -245,7 +242,6 @@ public class BluetoothLED extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         break;
-*/
                 }
 
                 return true;
@@ -399,7 +395,7 @@ public class BluetoothLED extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_general, menu);    //각자에 맞는 R.menu. 파일 작성할 것
+        menuInflater.inflate(R.menu.menu_general, menu);    //게시판 목록 외에서 사용할 툴바 메뉴
         return true;
     }
 
@@ -407,32 +403,35 @@ public class BluetoothLED extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         //return super.onOptionsItemSelected(item);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.activity_bluetooth_led);  //각자에 맞는 레이아웃의 가장 겉 DrawerLayout 이용할 것
+        drawerLayout = (DrawerLayout) findViewById(R.id.activity);
 
         switch (item.getItemId()) {
             case R.id.MainButton:
-                intent = new Intent().setClass( getApplicationContext(), MainActivity.class );
-                Toast.makeText(getApplicationContext(), "메인 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                intent = new Intent().setClass( getApplicationContext(), MainActivity.class );  //MainActivity로 이동
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;
             case R.id.ChatButton:
-                Toast.makeText(getApplicationContext(), "채팅 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                intent = new Intent().setClass( getApplicationContext(), ChattingActivity.class );  //ChattingActivity로 이동
+                startActivity(intent);
+                return true;
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.MyPageButton:
-                Toast.makeText(getApplicationContext(), "마이페이지 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );    //MyㅔageActivity로 이동
+                startActivity(intent);
                 return true;
             case R.id.LogOutButton:
                 if(user != null){
-                    Toast.makeText(getApplicationContext(), "로그아웃 버튼 클릭됨", Toast.LENGTH_LONG).show();
                     FirebaseAuth.getInstance().signOut();
+                    intent = new Intent().setClass( getApplicationContext(), LoginActivity.class ); //로그아웃 후 LoginActivity로 이동
+                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "로그아웃 성공", Toast.LENGTH_LONG).show();
+                    overridePendingTransition(0, 0);
                 }else{
-                    Toast.makeText(getApplicationContext(), "로그아웃실패", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "로그아웃 실패", Toast.LENGTH_LONG).show();
                 }
-                intent = new Intent().setClass( getApplicationContext(), LoginActivity.class );
-                startActivity(intent);
-                overridePendingTransition(0, 0);
                 return true;
             default:
                 Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();

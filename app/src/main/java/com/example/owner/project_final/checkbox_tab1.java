@@ -90,7 +90,7 @@ public class checkbox_tab1 extends AppCompatActivity {
         btn2=(Button)findViewById(R.id.btn2);
 
        //  fd = FirebaseDatabase.getInstance();
-        // fdRef = fd.getReference("tab1");
+        // fdRef = fd.getReference("activity_tab1");
 
 
         DocumentReference Doctab1 = db.collection(email).document(data); // 캘린더에서 선택날 날짜에 대한 정보들을 조회!

@@ -29,6 +29,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +45,7 @@ import com.example.owner.project_final.map.MapFragemnt;
 import com.example.owner.project_final.model.Comment;
 import com.example.owner.project_final.model.PreferenceHelper;
 import com.example.owner.project_final.model.Reply;
-import com.example.owner.project_final.model.RoomWrite;
+import com.example.owner.project_final.model.PurchaseWrite;
 import com.example.owner.project_final.model.UserModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -65,7 +67,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RoomDetailActivity extends AppCompatActivity {
+public class PurchaseDetailActivity extends AppCompatActivity {
     //[오투잡] 2019.04.13 글쓰기 상세부분 구현
 
     @BindView(R.id.title_date)
@@ -73,15 +75,15 @@ public class RoomDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.title)
     TextView tvTitle;
+
     @BindView(R.id.User)
     TextView tvUser;
-    @BindView(R.id.editStartDay)
-    TextView tvStartDay;
-    @BindView(R.id.editEndDay)
-    TextView tvEndDay;
 
-    @BindView(R.id.daily_rental)
-    TextView tvEDailyRental;
+    @BindView(R.id.editTradeDate)
+    TextView tvTradeDate;
+
+    @BindView(R.id.editTradeTime)
+    TextView tvTradeTime;
 
     @BindView(R.id.address)
     TextView tvAddress;
@@ -92,33 +94,17 @@ public class RoomDetailActivity extends AppCompatActivity {
     @BindView(R.id.Contents)
     TextView tvDiscription;
 
-    @BindView(R.id.option_room_01)
-    CheckBox checkBoxRoomOption01;
+    @BindView(R.id.cost)
+    TextView tvCost;
 
-    @BindView(R.id.option_room_02)
-    CheckBox checkBoxRoomOption02;
+    @BindView(R.id.tradeItem)
+    TextView tvTradeItem;
 
-    @BindView(R.id.option_room_03)
-    CheckBox checkBoxRoomOption03;
+    @BindView(R.id.photo_1)
+    ImageView ivPhoto1;
 
-    @BindView(R.id.option_room_04)
-    CheckBox checkBoxRoomOption04;
-
-    @BindView(R.id.option_room_05)
-    CheckBox checkBoxRoomOption05;
-
-
-    @BindView(R.id.option_limit_01)
-    CheckBox checkBoxRoomLimitOption01;
-
-    @BindView(R.id.option_limit_02)
-    CheckBox checkBoxRoomLimitOption02;
-
-    @BindView(R.id.option_limit_03)
-    CheckBox checkBoxRoomLimitOption03;
-
-    @BindView(R.id.option_limit_04)
-    CheckBox checkBoxRoomLimitOption04;
+    @BindView(R.id.photo_2)
+    ImageView ivPhoto2;
 
     @BindView(R.id.unknown_name)
     CheckBox checkBoxunknownName;
@@ -131,17 +117,9 @@ public class RoomDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler_comments)
     RecyclerView recyclerView;
-
-
-    @BindView(R.id.photo_1)
-    ImageView ivPhoto1;
-
-    @BindView(R.id.photo_2)
-    ImageView ivPhoto2;
-
     private MapFragemnt mMapFragemnt;
     private AlertDialog dialog;
-    RoomWrite mRoomWrite;
+    PurchaseWrite mPurchaseWrite;
     CommentAdapter mCommentAdapter;
 
     String[] photoUri = {"", ""};
@@ -162,66 +140,30 @@ public class RoomDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_room_detail);
+        setContentView(R.layout.activity_purchase_detail);
         ButterKnife.bind(this);
 
         Intent intent_detail = getIntent();
         Bundle bundle = new Bundle();
         if (intent_detail != null) {
-            mRoomWrite = (RoomWrite) intent_detail.getSerializableExtra("RoomWrite");
-            L.e("::::::시리얼 라이저블 : " + mRoomWrite.toString());
+            mPurchaseWrite = (PurchaseWrite) intent_detail.getSerializableExtra("PurchaseWrite");
+            L.e("::::::시리얼 라이저블 : " + mPurchaseWrite.toString());
 
-            tvTitle.setText(mRoomWrite.getTitle());
+            tvTitle.setText(mPurchaseWrite.getTitle());
 
-            tvUser.setText(mRoomWrite.getWriter());
-            date.setText(mRoomWrite.getPostingDate());
-            tvStartDay.setText(mRoomWrite.getRentalStartTime());
-            tvEndDay.setText(mRoomWrite.getRentalEndTime());
-            tvEDailyRental.setText(mRoomWrite.getRentalFee());
-            tvAddress.setText(mRoomWrite.getAddress());
-            tvDetailAddress.setText(mRoomWrite.getDescription());
-            tvDiscription.setText(mRoomWrite.getDescription());
-
-            if (!mRoomWrite.getRoomOption1().equalsIgnoreCase("")) {
-                checkBoxRoomOption01.setChecked(true);
-            }
-
-            if (!mRoomWrite.getRoomOption2().equalsIgnoreCase("")) {
-                checkBoxRoomOption02.setChecked(true);
-            }
-
-            if (!mRoomWrite.getRoomOption3().equalsIgnoreCase("")) {
-                checkBoxRoomOption03.setChecked(true);
-            }
-
-            if (!mRoomWrite.getRoomOption4().equalsIgnoreCase("")) {
-                checkBoxRoomOption04.setChecked(true);
-            }
-
-            if (!mRoomWrite.getRoomOption5().equalsIgnoreCase("")) {
-                checkBoxRoomOption05.setChecked(true);
-            }
-
-
-            if (!mRoomWrite.getRoomLimitOption1().equalsIgnoreCase("")) {
-                checkBoxRoomLimitOption01.setChecked(true);
-            }
-
-            if (!mRoomWrite.getRoomLimitOption2().equalsIgnoreCase("")) {
-                checkBoxRoomLimitOption02.setChecked(true);
-            }
-
-            if (!mRoomWrite.getRoomLimitOption3().equalsIgnoreCase("")) {
-                checkBoxRoomLimitOption03.setChecked(true);
-            }
-
-            if (!mRoomWrite.getRoomLimitOption4().equalsIgnoreCase("")) {
-                checkBoxRoomLimitOption04.setChecked(true);
-            }
+            tvUser.setText(mPurchaseWrite.getWriter());
+            date.setText(mPurchaseWrite.getPostingDate());
+            tvTradeDate.setText(mPurchaseWrite.geteditTradeDate());
+            tvTradeTime.setText(mPurchaseWrite.geteditTradeTime());
+            tvCost.setText(mPurchaseWrite.geteditCost());
+            tvTradeItem.setText(mPurchaseWrite.getTradeItem());
+            tvAddress.setText(mPurchaseWrite.getAddress());
+            tvDetailAddress.setText(mPurchaseWrite.getDescription());
+            tvDiscription.setText(mPurchaseWrite.getDescription());
 
             mMapFragemnt = MapFragemnt.getInstance();
-            bundle.putDouble(PublicVariable.LATITUDE, Double.valueOf(mRoomWrite.getLatitude()));
-            bundle.putDouble(PublicVariable.LONGITUDE, Double.valueOf(mRoomWrite.getLongitude()));
+            bundle.putDouble(PublicVariable.LATITUDE, Double.valueOf(mPurchaseWrite.getLatitude()));
+            bundle.putDouble(PublicVariable.LONGITUDE, Double.valueOf(mPurchaseWrite.getLongitude()));
             mMapFragemnt.setArguments(bundle);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -240,7 +182,7 @@ public class RoomDetailActivity extends AppCompatActivity {
                     if (dialog != null && dialog.isShowing()) {
                         dialog.dismiss();
                     }
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RoomDetailActivity.this/*, R.style.Theme_AppCompat_Light_Dialog*/);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(PurchaseDetailActivity.this/*, R.style.Theme_AppCompat_Light_Dialog*/);
                     builder.setTitle("답글 달기");
                     LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
                     View view = inflater.inflate(R.layout.dialog_reply, null);
@@ -256,7 +198,7 @@ public class RoomDetailActivity extends AppCompatActivity {
                                 return;
                             }
 
-                            DatabaseReference req = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_ROOMS_COMMENT).child(item.getNodeId()).child(item.getChildId());
+                            DatabaseReference req = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_PURCHASES_COMMENT).child(item.getNodeId()).child(item.getChildId());
                             req.runTransaction(new Transaction.Handler() {
                                 @NonNull
                                 @Override
@@ -267,7 +209,7 @@ public class RoomDetailActivity extends AppCompatActivity {
                                     }
 
                                     Map<String, Reply> replyHashMap = comment.getReplyMap();
-                                    String key = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_ROOMS_COMMENT).push().getKey();
+                                    String key = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_PURCHASES_COMMENT).push().getKey();
                                     replyHashMap.put(key, new Reply(FirebaseApi.getCurrentUser().getUid(), false, PreferenceHelper.getNickName(getApplicationContext()), new SimpleDateFormat("yyyy/MM/dd").format(System.currentTimeMillis())
                                             , editContent.getText().toString(), key));
                                     comment.setReplyMap(replyHashMap);
@@ -308,7 +250,7 @@ public class RoomDetailActivity extends AppCompatActivity {
         toolBar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("단기방대여 글보기");
+        actionBar.setTitle("공동구매 글보기");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_menu_black_24dp);
         // -----------------------------------------------------------------------------------------
@@ -398,7 +340,7 @@ public class RoomDetailActivity extends AppCompatActivity {
 
     public void onLoadComment() {
 
-        DatabaseReference req = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_ROOMS_COMMENT).child(mRoomWrite.getId());
+        DatabaseReference req = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_PURCHASES_COMMENT).child(mPurchaseWrite.getId());
         req.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -416,7 +358,7 @@ public class RoomDetailActivity extends AppCompatActivity {
             }
         });
 
-        setVaildFirebaseStorage(mRoomWrite.getAddedByUser(), mRoomWrite.getPhotoID());
+        setVaildFirebaseStorage(mPurchaseWrite.getAddedByUser(), mPurchaseWrite.getPhotoID());
 
     }
 
@@ -434,9 +376,9 @@ public class RoomDetailActivity extends AppCompatActivity {
                 UserModel userModel = dataSnapshot.getValue(UserModel.class);
                 if (userModel != null) {
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
-                    DatabaseReference req = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_ROOMS_COMMENT).child(mRoomWrite.getId());
+                    DatabaseReference req = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_PURCHASES_COMMENT).child(mPurchaseWrite.getId());
                     String id = req.push().getKey();
-                    Comment comment = new Comment(FirebaseApi.getCurrentUser().getUid(), checkBoxunknownName.isChecked(), userModel.getName(), simpleDateFormat.format(System.currentTimeMillis()), editComment.getText().toString(), mRoomWrite.getId(), id, false);
+                    Comment comment = new Comment(FirebaseApi.getCurrentUser().getUid(), checkBoxunknownName.isChecked(), userModel.getName(), simpleDateFormat.format(System.currentTimeMillis()), editComment.getText().toString(), mPurchaseWrite.getId(), id, false);
                     req.child(id).setValue(comment);
                     mCommentAdapter.insertData(comment);
                     editComment.setText("");
@@ -494,7 +436,7 @@ public class RoomDetailActivity extends AppCompatActivity {
         }
 
         for (int index = 0; index < 2; index++) {
-            StorageReference storageRef = storage.getReferenceFromUrl(PublicVariable.FIREBASE_STORAGE).child(PublicVariable.FIREBASE_STORAGE_ROOMS).child(key).child("roomImage" + (index + 1) + ".jpg").child(storageKey);
+            StorageReference storageRef = storage.getReferenceFromUrl(PublicVariable.FIREBASE_STORAGE).child(PublicVariable.FIREBASE_STORAGE_PURCHASES).child(key).child("purchaseImage" + (index + 1) + ".jpg").child(storageKey);
             final int success = index;
             storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override

@@ -6,8 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:orientation="vertical"
-    android:id="@+id/activity_bluetooth_led"
-    tools:context=".MainActivity">
+    android:id="@+id/activity"
+    tools:context=".BluetoothLED">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
         <android.support.v7.widget.Toolbar
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/bluetoothToolbar"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -93,7 +93,7 @@
 
     <!-- For Navigation Bar -->
     <android.support.design.widget.NavigationView
-        android:id="@+id/navigationView_bluetooth_led"
+        android:id="@+id/navigationView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

@@ -204,7 +204,6 @@ public class FoodActivity extends AppCompatActivity {
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
-/*
                     case R.id.navi_tab3_3:    //음식주문 게시판
                         Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
@@ -223,14 +222,12 @@ public class FoodActivity extends AppCompatActivity {
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
-*/
                     case R.id.navi_tab4:    //무드등
                         Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent = new Intent().setClass( getApplicationContext(), BluetoothLED.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
-/*
                     case R.id.navi_tab5:    //음성변조
                         Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -239,7 +236,6 @@ public class FoodActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         break;
-*/
                 }
 
                 return true;
@@ -279,30 +275,30 @@ public class FoodActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.post_menu, menu);    //각자에 맞는 R.menu. 파일 작성할 것
+        menuInflater.inflate(R.menu.post_menu, menu);    //게시판 목록용 메뉴
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        drawerLayout = (DrawerLayout)findViewById(R.id.activity);  //각자에 맞는 레이아웃의 가장 겉 DrawerLayout 이용할 것
+        drawerLayout = (DrawerLayout)findViewById(R.id.activity);
 
         switch (item.getItemId()) {
             case R.id.MainButton_post:
-                Toast.makeText(getApplicationContext(), "메인 버튼 클릭됨", Toast.LENGTH_LONG).show();
-                intent = new Intent().setClass( getApplicationContext(), MainActivity.class );
+                intent = new Intent().setClass( getApplicationContext(), MainActivity.class );  //MainActivity로 이동
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;
             case R.id.ChatButton_post:
-                Toast.makeText(getApplicationContext(), "채팅 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                intent = new Intent().setClass( getApplicationContext(), ChattingActivity.class );  //ChattingActivity로 이동
+                startActivity(intent);
                 return true;
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.action_write_post:
                 //[오투잡] 2019.04.12 글쓰기 버튼 클릭시 수정
-                Toast.makeText(getApplicationContext(), "글쓰기 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 if (!gpsEnabled()) {
                     int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.95);
                     int height = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -323,7 +319,7 @@ public class FoodActivity extends AppCompatActivity {
                         @Override
                         public void onPermissionsChecked(MultiplePermissionsReport report) {
                             if (report.areAllPermissionsGranted()) {
-                                intent = new Intent().setClass(FoodActivity.this, FoodWriteActivity.class);
+                                intent = new Intent().setClass(FoodActivity.this, HobbyWriteActivity.class);
                                 startActivity(intent);
                                 foodActivity.finish();
                                 overridePendingTransition(0, 0);
@@ -361,19 +357,19 @@ public class FoodActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.MyPageButton_post:
-                Toast.makeText(getApplicationContext(), "마이페이지 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );    //MypageActivity로 이동
                 startActivity(intent);
                 return true;
             case R.id.LogOutButton_post:
                 if(user != null){
-                    Toast.makeText(getApplicationContext(), "로그아웃 버튼 클릭됨", Toast.LENGTH_LONG).show();
                     FirebaseAuth.getInstance().signOut();
+                    intent = new Intent().setClass( getApplicationContext(), LoginActivity.class ); //로그아웃 후 LoginActivity로 이동
+                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "로그아웃 성공", Toast.LENGTH_LONG).show();
+                    overridePendingTransition(0, 0);
                 }else{
-                    Toast.makeText(getApplicationContext(), "로그아웃실패", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "로그아웃 실패", Toast.LENGTH_LONG).show();
                 }
-                intent = new Intent().setClass( getApplicationContext(), LoginActivity.class );
-                startActivity(intent);
-                overridePendingTransition(0, 0);
                 return true;
             default:
                 Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();

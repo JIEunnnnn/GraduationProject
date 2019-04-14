@@ -22,7 +22,7 @@ public class RoomWrite implements Serializable {
     private String roomLimitOption3;
     private String roomLimitOption4;
 
-    private String roomaddress;
+    private String address;
     private String detailAddress;
 
     private String photoID;
@@ -39,7 +39,10 @@ public class RoomWrite implements Serializable {
     public RoomWrite() {
     }
 
-    public RoomWrite(String addedByUser, String title, String writer, String rentalStartTime, String rentalEndTime, String rentalFee, String roomOption1, String roomOption2, String roomOption3, String roomOption4, String roomOption5, String roomLimitOption1, String roomLimitOption2, String roomLimitOption3, String roomLimitOption4, String roomaddress, String detailAddress, String photoID, String description, String latitude, String longitude, String postingDate, String id) {
+    public RoomWrite(String addedByUser, String title, String writer, String rentalStartTime, String rentalEndTime, String rentalFee,
+                     String roomOption1, String roomOption2, String roomOption3, String roomOption4, String roomOption5,
+                     String roomLimitOption1, String roomLimitOption2, String roomLimitOption3, String roomLimitOption4,
+                     String address, String detailAddress, String photoID, String description, String latitude, String longitude, String postingDate, String id) {
         this.addedByUser = addedByUser;
         this.title = title;
         this.writer = writer;
@@ -55,7 +58,7 @@ public class RoomWrite implements Serializable {
         this.roomLimitOption2 = roomLimitOption2;
         this.roomLimitOption3 = roomLimitOption3;
         this.roomLimitOption4 = roomLimitOption4;
-        this.roomaddress = roomaddress;
+        this.address = address;
         this.detailAddress = detailAddress;
         this.photoID = photoID;
         this.description = description;
@@ -141,8 +144,8 @@ public class RoomWrite implements Serializable {
         return roomLimitOption4;
     }
 
-    public String getRoomaddress() {
-        return roomaddress;
+    public String getAddress() {
+        return address;
     }
 
     public String getDetailAddress() {
@@ -175,7 +178,7 @@ public class RoomWrite implements Serializable {
                 ", roomLimitOption2='" + roomLimitOption2 + '\'' +
                 ", roomLimitOption3='" + roomLimitOption3 + '\'' +
                 ", roomLimitOption4='" + roomLimitOption4 + '\'' +
-                ", roomaddress='" + roomaddress + '\'' +
+                ", address='" + address + '\'' +
                 ", detailAddress='" + detailAddress + '\'' +
                 ", photoID='" + photoID + '\'' +
                 ", description='" + description + '\'' +

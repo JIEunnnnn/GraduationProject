@@ -82,13 +82,13 @@ public class RoomWriteActivity extends AppCompatActivity {
     //조언  public static Activity roomWriteActivity;  방식으로 Static 을 너무 쓰면 리로스를 많이잡아먹습니다 가급적 satic은 자제해주세요.
     Intent intent;
 
-    @BindView(R.id.room_title_date)
+    @BindView(R.id.title_date)
     TextView date;
 
-    @BindView(R.id.room_title)
+    @BindView(R.id.title)
     EditText editTitle;
 
-    @BindView(R.id.room_User)
+    @BindView(R.id.User)
     EditText editUser;
 
     @BindView(R.id.editStartDay)
@@ -100,13 +100,13 @@ public class RoomWriteActivity extends AppCompatActivity {
     @BindView(R.id.daily_rental)
     EditText editEDailyRental;
 
-    @BindView(R.id.room_address)
-    EditText editRoomAddress;
+    @BindView(R.id.address)
+    EditText editAddress;
 
     @BindView(R.id.detail_address)
-    EditText editRoomDetailAddress;
+    EditText editDetailAddress;
 
-    @BindView(R.id.room_Contents)
+    @BindView(R.id.Contents)
     EditText editDiscription;
 
     @BindView(R.id.option_room_01)
@@ -138,16 +138,16 @@ public class RoomWriteActivity extends AppCompatActivity {
     CheckBox checkBoxRoomLimitOption04;
 
     @BindView(R.id.photo_1)
-    ImageView roomPhoto1;
+    ImageView Photo1;
 
     @BindView(R.id.default_photo_1)
-    ImageView roomPhotodefalut1;
+    ImageView Photodefalut1;
 
     @BindView(R.id.photo_2)
-    ImageView roomPhoto2;
+    ImageView Photo2;
 
     @BindView(R.id.default_photo_2)
-    ImageView roomPhotodefalut2;
+    ImageView Photodefalut2;
 
     @BindView(R.id.scroll)
     ScrollView scrollView;
@@ -201,7 +201,7 @@ public class RoomWriteActivity extends AppCompatActivity {
         editUser.setText(PreferenceHelper.getNickName(getApplicationContext()));
 
         // For Toolbar -----------------------------------------------------------------------------
-        toolBar = (Toolbar)findViewById(R.id.roomWriteToolbar);
+        toolBar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("단기방대여 글쓰기");
@@ -210,8 +210,8 @@ public class RoomWriteActivity extends AppCompatActivity {
         // -----------------------------------------------------------------------------------------
 
         // For Navigation Drawer -------------------------------------------------------------------
-        drawerLayout = (DrawerLayout)findViewById(R.id.activity_room_write);  //각 레이아웃의 가장 큰 DrawerLayout 이름
-        navigationView = (NavigationView)findViewById(R.id.room_write_navigationView);
+        drawerLayout = (DrawerLayout)findViewById(R.id.activity);  //각 레이아웃의 가장 큰 DrawerLayout 이름
+        navigationView = (NavigationView)findViewById(R.id.navigationView);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -252,7 +252,6 @@ public class RoomWriteActivity extends AppCompatActivity {
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
-/*
                     case R.id.navi_tab3_3:    //음식주문 게시판
                         Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
@@ -271,14 +270,12 @@ public class RoomWriteActivity extends AppCompatActivity {
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
-*/
                     case R.id.navi_tab4:    //무드등
                         Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent = new Intent().setClass( getApplicationContext(), BluetoothLED.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
-/*
                     case R.id.navi_tab5:    //음성변조
                         Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -287,7 +284,6 @@ public class RoomWriteActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         break;
-*/
                 }
 
                 return true;
@@ -297,7 +293,7 @@ public class RoomWriteActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.saveButton_room)
+    @OnClick(R.id.saveButton)
     public void save(View view) {
 
         if (!validateForm()) {
@@ -356,7 +352,7 @@ public class RoomWriteActivity extends AppCompatActivity {
                 editStartDay.getText().toString(), editEndDay.getText().toString(), editEDailyRental.getText().toString(),
                 mRoomOption[0], mRoomOption[1], mRoomOption[2], mRoomOption[3], mRoomOption[4],
                 mRoomLimitOption[0], mRoomLimitOption[1], mRoomLimitOption[2], mRoomLimitOption[3],
-                editRoomAddress.getText().toString(), editRoomDetailAddress.getText().toString(), storageKey, editDiscription.getText().toString(), latitude, longitude, postingDate, autoKey);
+                editAddress.getText().toString(), editDetailAddress.getText().toString(), storageKey, editDiscription.getText().toString(), latitude, longitude, postingDate, autoKey);
 
         L.e("::::::auto key : " + autoKey);
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -399,7 +395,7 @@ public class RoomWriteActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick(R.id.cancelButton_room)
+    @OnClick(R.id.cancelButton)
     public void cancle(View view) {
         intent = new Intent().setClass( getApplicationContext(), RoomActivity.class );
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -442,7 +438,7 @@ public class RoomWriteActivity extends AppCompatActivity {
                                                         L.e("::::address : " + address);
                                                         break;
                                                     }
-                                                    editRoomAddress.setText(address);
+                                                    editAddress.setText(address);
                                                     mMapFragemnt.onMapUpdate();
                                                 } catch (Exception e) {
 
@@ -604,18 +600,18 @@ public class RoomWriteActivity extends AppCompatActivity {
         }
 
 
-        if (TextUtils.isEmpty(editRoomAddress.getText().toString())) {
-            editRoomAddress.setError("Required");
+        if (TextUtils.isEmpty(editAddress.getText().toString())) {
+            editAddress.setError("Required");
             result = false;
         } else {
-            editRoomAddress.setError(null);
+            editAddress.setError(null);
         }
 
-        if (TextUtils.isEmpty(editRoomDetailAddress.getText().toString())) {
-            editRoomDetailAddress.setError("Required");
+        if (TextUtils.isEmpty(editDetailAddress.getText().toString())) {
+            editDetailAddress.setError("Required");
             result = false;
         } else {
-            editRoomDetailAddress.setError(null);
+            editDetailAddress.setError(null);
         }
 
         if (TextUtils.isEmpty(editEDailyRental.getText().toString())) {
@@ -696,13 +692,13 @@ public class RoomWriteActivity extends AppCompatActivity {
                     photoUri[mPhotoPosition] = uri.toString();
 
                     if (mPhotoPosition == 0) {
-                        roomPhoto1.setVisibility(View.VISIBLE);
-                        roomPhotodefalut1.setVisibility(View.GONE);
-                        ImageLoaderHelper.setProfileImage(getApplicationContext(), uri, roomPhoto1, "");
+                        Photo1.setVisibility(View.VISIBLE);
+                        Photodefalut1.setVisibility(View.GONE);
+                        ImageLoaderHelper.setProfileImage(getApplicationContext(), uri, Photo1, "");
                     } else {
-                        roomPhoto2.setVisibility(View.VISIBLE);
-                        roomPhotodefalut2.setVisibility(View.GONE);
-                        ImageLoaderHelper.setProfileImage(getApplicationContext(), uri, roomPhoto2, "");
+                        Photo2.setVisibility(View.VISIBLE);
+                        Photodefalut2.setVisibility(View.GONE);
+                        ImageLoaderHelper.setProfileImage(getApplicationContext(), uri, Photo2, "");
                     }
 
                 } catch (Exception e) {
@@ -716,7 +712,7 @@ public class RoomWriteActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_general, menu);    //각자에 맞는 R.menu. 파일 작성할 것
+        menuInflater.inflate(R.menu.menu_general, menu);    //게시판 목록 외에서 사용할 툴바 메뉴
         return true;
     }
 
@@ -724,33 +720,35 @@ public class RoomWriteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         //return super.onOptionsItemSelected(item);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.activity_room_write);  //각자에 맞는 레이아웃의 가장 겉 DrawerLayout 이용할 것
+        drawerLayout = (DrawerLayout) findViewById(R.id.activity);
 
         switch (item.getItemId()) {
             case R.id.MainButton:
-                intent = new Intent().setClass( getApplicationContext(), MainActivity.class );
+                intent = new Intent().setClass( getApplicationContext(), MainActivity.class );  //MainActivity로 이동
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                Toast.makeText(getApplicationContext(), "메인 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.ChatButton:
-                Toast.makeText(getApplicationContext(), "채팅 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                intent = new Intent().setClass( getApplicationContext(), ChattingActivity.class );  //ChattingActivity로 이동
+                startActivity(intent);
                 return true;
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.MyPageButton:
-                Toast.makeText(getApplicationContext(), "마이페이지 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );    //MyㅔageActivity로 이동
+                startActivity(intent);
                 return true;
             case R.id.LogOutButton:
                 if(user != null){
-                    Toast.makeText(getApplicationContext(), "로그아웃 버튼 클릭됨", Toast.LENGTH_LONG).show();
                     FirebaseAuth.getInstance().signOut();
+                    intent = new Intent().setClass( getApplicationContext(), LoginActivity.class ); //로그아웃 후 LoginActivity로 이동
+                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "로그아웃 성공", Toast.LENGTH_LONG).show();
+                    overridePendingTransition(0, 0);
                 }else{
-                    Toast.makeText(getApplicationContext(), "로그아웃실패", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "로그아웃 실패", Toast.LENGTH_LONG).show();
                 }
-                intent = new Intent().setClass( getApplicationContext(), LoginActivity.class );
-                startActivity(intent);
-                overridePendingTransition(0, 0);
                 return true;
             default:
                 Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
