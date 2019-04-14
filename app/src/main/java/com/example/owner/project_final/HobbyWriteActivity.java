@@ -49,7 +49,7 @@ import com.example.owner.project_final.firebase.PublicVariable;
 import com.example.owner.project_final.location.LocationProvider;
 import com.example.owner.project_final.map.MapFragemnt;
 import com.example.owner.project_final.model.PreferenceHelper;
-import com.example.owner.project_final.model.FoodWrite;
+import com.example.owner.project_final.model.HobbyWrite;
 import com.example.owner.project_final.volley.VolleyResult;
 import com.example.owner.project_final.volley.VolleyService;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -76,7 +76,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FoodWriteActivity extends AppCompatActivity {
+public class HobbyWriteActivity extends AppCompatActivity {
     //[오투잡] 2019.04.12 글쓰기 부분 진입 부분 버터나이프 기능적용
     //[오투잡] 2019.04.13 글쓰기 부분 데이터 및 구글맵 셋팅 Firebase 서버로 데이터 add 완료
     //조언  public static Activity roomWriteActivity;  방식으로 Static 을 너무 쓰면 리로스를 많이잡아먹습니다 가급적 satic은 자제해주세요.
@@ -87,13 +87,18 @@ public class FoodWriteActivity extends AppCompatActivity {
 
     @BindView(R.id.title)
     EditText editTitle;
+
     @BindView(R.id.User)
     EditText editUser;
+
     @BindView(R.id.editTradeDate)
     EditText editTradeDate;
 
     @BindView(R.id.editTradeTime)
     EditText editTradeTime;
+
+    @BindView(R.id.editCost)
+    EditText editCost;
 
     @BindView(R.id.address)
     EditText editAddress;
@@ -104,23 +109,20 @@ public class FoodWriteActivity extends AppCompatActivity {
     @BindView(R.id.Contents)
     EditText editDiscription;
 
-    @BindView(R.id.option_food_pay)
-    RadioGroup option_food_pay;
+    @BindView(R.id.option_hobby)
+    RadioGroup option_hobby;
 
-    @BindView(R.id.option_food_pay_01)
-    RadioButton option_food_pay_01;
+    @BindView(R.id.option_hobby_01)
+    RadioButton option_hobby_01;
 
-    @BindView(R.id.option_food_pay_02)
-    RadioButton option_food_pay_02;
+    @BindView(R.id.option_hobby_02)
+    RadioButton option_hobby_02;
 
-    @BindView(R.id.option_food_divide)
-    RadioGroup option_food_divide;
+    @BindView(R.id.option_hobby_03)
+    RadioButton option_hobby_03;
 
-    @BindView(R.id.option_food_divide_01)
-    RadioButton option_food_divide_01;
-
-    @BindView(R.id.option_food_divide_02)
-    RadioButton option_food_divide_02;
+    @BindView(R.id.option_hobby_04)
+    RadioButton option_hobby_04;
 
     @BindView(R.id.photo_1)
     ImageView Photo1;
@@ -139,8 +141,7 @@ public class FoodWriteActivity extends AppCompatActivity {
 
     public final static int REQUEST_PICK_IMAGE = 0x20;
 
-    private String mFoodOption = "";
-    private String mFoodLimitOption = "";
+    private String mHobbyOption = "";
     private String[] photoUri = new String[]{"", ""};
 
     private String latitude;
@@ -164,14 +165,14 @@ public class FoodWriteActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     // ---------------------------------------------------------------------------------------------
 
-    String option_food_pay_result="";
-    String option_food_divide_result="";
+    String option_hobby_result="";
+    int option_hobby_result_count=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        L.e("::::FoodWriteActivity");
+        L.e("::::HobbyWriteActivity");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_food_write);
+        setContentView(R.layout.activity_hobby_write);
         ButterKnife.bind(this);
 
         mMapFragemnt = MapFragemnt.getInstance();
@@ -192,7 +193,7 @@ public class FoodWriteActivity extends AppCompatActivity {
         toolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("음식주문 글쓰기");
+        actionBar.setTitle("여가취미 글쓰기");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_menu_black_24dp);
         // -----------------------------------------------------------------------------------------
@@ -291,31 +292,33 @@ public class FoodWriteActivity extends AppCompatActivity {
             return;
         }
 
-        if (option_food_pay_01.isChecked()) {
-            mFoodOption = "전체 1/n";
-            option_food_pay_result = "전체 1/n";
+        if (option_hobby_01.isChecked()) {
+            option_hobby_result = option_hobby_01.getText().toString();
+            option_hobby_result_count=1;
+            //mHobbyOption = "운동";
+            //option_hobby_result = "운동";
         }
 
-        if (option_food_pay_02.isChecked()) {
-            mFoodOption = "더치페이";
-            option_food_pay_result = "더치페이";
+        if (option_hobby_02.isChecked()) {
+            option_hobby_result = option_hobby_02.getText().toString();
+            option_hobby_result_count=2;
+            //mHobbyOption = "이색체험";
+            //option_hobby_result = "이색체험";
         }
 
-//        int payId = option_food_pay.getCheckedRadioButtonId();
-//        option_food_pay_result.findViewById(payId);
-
-        if (option_food_divide_01.isChecked()) {
-            mFoodLimitOption = "전체 1/n";
-            option_food_divide_result = "전체 1/n";
+        if (option_hobby_03.isChecked()) {
+            option_hobby_result = option_hobby_03.getText().toString();
+            option_hobby_result_count=3;
+            //mHobbyOption = "자기계발";
+            //option_hobby_result = "자기계발";
         }
 
-        if (option_food_divide_02.isChecked()) {
-            mFoodLimitOption = "시킨 메뉴만 픽업";
-            option_food_divide_result = "시킨 메뉴만 픽업";
+        if (option_hobby_04.isChecked()) {
+            option_hobby_result = option_hobby_04.getText().toString();
+            option_hobby_result_count=4;
+            //mHobbyOption = "운동";
+            //option_hobby_result = "운동";
         }
-
-//        int divideId = option_food_divide.getCheckedRadioButtonId();
-//        option_food_divide_result.findViewById(divideId);
 
         final ArrayList<Uri> storePhotoArray = new ArrayList<>();
         int i = 0;
@@ -327,15 +330,16 @@ public class FoodWriteActivity extends AppCompatActivity {
         }
 
         showProgressDialog("업로드 중입니다.");
-        String autoKey = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_FOODS).push().getKey();
-        final String storageKey = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_FOODS).push().getKey();
-        FoodWrite foodWrite = new FoodWrite(FirebaseApi.getCurrentUser().getUid(), editTitle.getText().toString(), editUser.getText().toString(),
-                editTradeDate.getText().toString(), editTradeTime.getText().toString(), option_food_pay_result, option_food_divide_result,
+        String autoKey = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_HOBBIES).push().getKey();
+        final String storageKey = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_HOBBIES).push().getKey();
+        HobbyWrite hobbyWrite = new HobbyWrite(FirebaseApi.getCurrentUser().getUid(), editTitle.getText().toString(), editUser.getText().toString(),
+                editTradeDate.getText().toString(), editTradeTime.getText().toString(), editCost.getText().toString(), option_hobby_result_count,
+                option_hobby_result, option_hobby_01.getText().toString(), option_hobby_02.getText().toString(), option_hobby_03.getText().toString(), option_hobby_04.getText().toString(),
                 editAddress.getText().toString(), editDetailAddress.getText().toString(), storageKey, editDiscription.getText().toString(), latitude, longitude, postingDate, autoKey);
 
         L.e("::::::auto key : " + autoKey);
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child(PublicVariable.FIREBASE_CHILD_FOODS).child(FirebaseApi.getCurrentUser().getUid()).child(autoKey).setValue(foodWrite).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child(PublicVariable.FIREBASE_CHILD_HOBBIES).child(FirebaseApi.getCurrentUser().getUid()).child(autoKey).setValue(hobbyWrite).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
@@ -346,7 +350,7 @@ public class FoodWriteActivity extends AppCompatActivity {
                                 hideProgressDialog();
                                 int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.95);
                                 int height = WindowManager.LayoutParams.WRAP_CONTENT;
-                                new AlertDialog.Builder(FoodWriteActivity.this, R.style.Theme_AppCompat_Light_Dialog)
+                                new AlertDialog.Builder(HobbyWriteActivity.this, R.style.Theme_AppCompat_Light_Dialog)
                                         .setTitle("알림")
                                         .setMessage("업로드가 완료 되었습니다. ")
                                         .setCancelable(false)
@@ -354,7 +358,7 @@ public class FoodWriteActivity extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 Toast.makeText(getApplicationContext(),  "onClick", Toast.LENGTH_LONG).show();
-                                                intent = new Intent().setClass( getApplicationContext(),FoodActivity.class );
+                                                intent = new Intent().setClass( getApplicationContext(),HobbyActivity.class );
                                                 finish();
                                             }
                                         }).setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -378,7 +382,7 @@ public class FoodWriteActivity extends AppCompatActivity {
 
     @OnClick(R.id.cancelButton)
     public void cancle(View view) {
-        intent = new Intent().setClass( getApplicationContext(), FoodActivity.class );
+        intent = new Intent().setClass( getApplicationContext(), HobbyActivity.class );
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
@@ -390,7 +394,7 @@ public class FoodWriteActivity extends AppCompatActivity {
             showSnakbar("GPS 장치를 활성화 해주세요.\n활성화 후 다시 시도해주세요.", 1500);
             return;
         }
-        Dexter.withActivity(FoodWriteActivity.this).withPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION).withListener(new MultiplePermissionsListener() {
+        Dexter.withActivity(HobbyWriteActivity.this).withPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION).withListener(new MultiplePermissionsListener() {
             @Override
             public void onPermissionsChecked(MultiplePermissionsReport report) {
                 if (report.areAllPermissionsGranted()) {
@@ -468,7 +472,7 @@ public class FoodWriteActivity extends AppCompatActivity {
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog dialog = new DatePickerDialog(FoodWriteActivity.this, new DatePickerDialog.OnDateSetListener() {
+            DatePickerDialog dialog = new DatePickerDialog(HobbyWriteActivity.this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     editTradeDate.setText(getResultDay(year, month, dayOfMonth));
@@ -490,7 +494,7 @@ public class FoodWriteActivity extends AppCompatActivity {
             calendar.setTimeInMillis(System.currentTimeMillis());
             int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
             int minute = calendar.get(Calendar.MINUTE);
-            TimePickerDialog dialog = new TimePickerDialog(FoodWriteActivity.this, new TimePickerDialog.OnTimeSetListener() {
+            TimePickerDialog dialog = new TimePickerDialog(HobbyWriteActivity.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                     editTradeTime.setText(hourOfDay + ":" + minute);
@@ -608,7 +612,7 @@ public class FoodWriteActivity extends AppCompatActivity {
 
     @OnClick(R.id.photo_view_1)
     public void setPhotoClick_01(View view) {
-        Dexter.withActivity(FoodWriteActivity.this).withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE).withListener(new MultiplePermissionsListener() {
+        Dexter.withActivity(HobbyWriteActivity.this).withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE).withListener(new MultiplePermissionsListener() {
             @Override
             public void onPermissionsChecked(MultiplePermissionsReport report) {
                 if (report.areAllPermissionsGranted()) {
@@ -628,7 +632,7 @@ public class FoodWriteActivity extends AppCompatActivity {
 
     @OnClick(R.id.photo_view_2)
     public void setPhotoClick_02(View view) {
-        Dexter.withActivity(FoodWriteActivity.this).withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE).withListener(new MultiplePermissionsListener() {
+        Dexter.withActivity(HobbyWriteActivity.this).withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE).withListener(new MultiplePermissionsListener() {
             @Override
             public void onPermissionsChecked(MultiplePermissionsReport report) {
                 if (report.areAllPermissionsGranted()) {

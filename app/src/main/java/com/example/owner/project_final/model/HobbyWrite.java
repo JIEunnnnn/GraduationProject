@@ -2,22 +2,24 @@ package com.example.owner.project_final.model;
 
 import java.io.Serializable;
 
-public class FoodWrite implements Serializable {
+public class HobbyWrite implements Serializable {
     private String addedByUser;
     private String title;
     private String writer;
 
+    private int option_hobby_result_count;
+
     private String editTradeDate;
     private String editTradeTime;
+    private  String editCost;
 
-    private String option_food_pay_result;
-    private String option_food_pay_01;
-    private String option_food_pay_02;
-    private String option_food_divide_result;
-    private String option_food_divide_01;
-    private String option_food_divide_02;
+    private String option_hobby_result;
+    private String option_hobby_01;
+    private String option_hobby_02;
+    private String option_hobby_03;
+    private String option_hobby_04;
 
-    private String foodaddress;
+    private String address;
     private String detailAddress;
 
     private String photoID;
@@ -31,21 +33,26 @@ public class FoodWrite implements Serializable {
 
     private String id;
 
-    public FoodWrite() {
+    public HobbyWrite() {
     }
 
-    public FoodWrite(String addedByUser, String title, String writer, String editTradeDate, String editTradeTime,
-                     String option_food_pay_result, String option_food_divide_result,
-                     String foodaddress, String detailAddress, String photoID, String description, String latitude, String longitude, String postingDate, String id) {
+    public HobbyWrite(String addedByUser, String title, String writer, String editTradeDate, String editTradeTime, String editCost, int option_hobby_result_count,
+                      String option_hobby_result, String option_hobby_01, String option_hobby_02, String option_hobby_03, String option_hobby_04,
+                      String address, String detailAddress, String photoID, String description, String latitude, String longitude, String postingDate, String id) {
         this.addedByUser = addedByUser; //FirebaseApi.getCurrentUser().getUid()
         this.title = title; //editTItle
         this.writer = writer;   //editUser
+        this.option_hobby_result_count = option_hobby_result_count; //option_hobby_result_count
         this.editTradeDate = editTradeDate; //editTradeDate
         this.editTradeTime = editTradeTime; //editTradeTime
-        this.option_food_pay_result = option_food_pay_result; //option_food_pay_result
-        this.option_food_divide_result = option_food_divide_result;   //option_food_divide_result
-        this.foodaddress = foodaddress; //editFoodAddress
-        this.detailAddress = detailAddress; //editFoodDetailAddress
+        this.editCost = editCost;   //editCost
+        this.option_hobby_result = option_hobby_result;  //String option_hobby_result
+        this.option_hobby_01 = option_hobby_01;  //String option_hobby_01
+        this.option_hobby_02 = option_hobby_02;  //String option_hobby_02
+        this.option_hobby_03 = option_hobby_03;  //String option_hobby_03
+        this.option_hobby_04 = option_hobby_04;  //String option_hobby_04
+        this.address = address; //editAddress
+        this.detailAddress = detailAddress; //editHobbyDetailAddress
         this.photoID = photoID; //storagekey
         this.description = description; //editDescription
         this.latitude = latitude;   //latitude
@@ -82,6 +89,10 @@ public class FoodWrite implements Serializable {
         return writer;
     }
 
+    public int getoption_hobby_result_count() {
+        return option_hobby_result_count;
+    }
+
     public String geteditTradeDate() {
         return editTradeDate;
     }
@@ -90,32 +101,32 @@ public class FoodWrite implements Serializable {
         return editTradeTime;
     }
 
-    public String getoption_food_pay_result() {
-        return option_food_pay_result;
+    public String geteditCost() {
+        return editCost;
     }
 
-    public String getoption_food_pay_01() {
-        return option_food_pay_01;
+    public String getoption_hobby_result() {
+        return option_hobby_result;
     }
 
-    public String getoption_food_pay_02() {
-        return option_food_pay_02;
+    public String getoption_hobby_01() {
+        return option_hobby_01;
     }
 
-    public String getoption_food_divide_result() {
-        return option_food_divide_result;
+    public String getoption_hobby_02() {
+        return option_hobby_02;
     }
 
-    public String getoption_food_divide_01() {
-        return option_food_divide_01;
+    public String getoption_hobby_03() {
+        return option_hobby_03;
     }
 
-    public String getoption_food_divide_02() {
-        return option_food_divide_02;
+    public String getoption_hobby_04() {
+        return option_hobby_04;
     }
 
     public String getAddress() {
-        return foodaddress;
+        return address;
     }
 
     public String getDetailAddress() {
@@ -132,15 +143,14 @@ public class FoodWrite implements Serializable {
 
     @Override
     public String toString() {
-        return "FoodWrite{" +
+        return "HobbyWrite{" +
                 "addedByUser='" + addedByUser + '\'' +
                 ", title='" + title + '\'' +
                 ", writer='" + writer + '\'' +
                 ", editTradeDate='" + editTradeDate + '\'' +
                 ", editTradeTime='" + editTradeTime + '\'' +
-                ", option_food_pay_result='" + option_food_pay_result + '\'' +
-                ", option_food_divide_result='" + option_food_divide_result + '\'' +
-                ", foodaddress='" + foodaddress + '\'' +
+                ", option_hobby_result='" + option_hobby_result + '\'' +
+                ", address='" + address + '\'' +
                 ", detailAddress='" + detailAddress + '\'' +
                 ", photoID='" + photoID + '\'' +
                 ", description='" + description + '\'' +

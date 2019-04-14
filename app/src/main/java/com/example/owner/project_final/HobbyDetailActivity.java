@@ -45,7 +45,7 @@ import com.example.owner.project_final.map.MapFragemnt;
 import com.example.owner.project_final.model.Comment;
 import com.example.owner.project_final.model.PreferenceHelper;
 import com.example.owner.project_final.model.Reply;
-import com.example.owner.project_final.model.FoodWrite;
+import com.example.owner.project_final.model.HobbyWrite;
 import com.example.owner.project_final.model.UserModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -67,7 +67,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FoodDetailActivity extends AppCompatActivity {
+public class HobbyDetailActivity extends AppCompatActivity {
     //[오투잡] 2019.04.13 글쓰기 상세부분 구현
 
     @BindView(R.id.title_date)
@@ -94,23 +94,23 @@ public class FoodDetailActivity extends AppCompatActivity {
     @BindView(R.id.Contents)
     TextView tvDiscription;
 
-    @BindView(R.id.option_food_pay)
-    RadioGroup option_food_pay;
+    @BindView(R.id.cost)
+    TextView tvCost;
 
-    @BindView(R.id.option_food_pay_01)
-    RadioButton option_food_pay_01;
+    @BindView(R.id.option_hobby)
+    RadioGroup option_hobby;
 
-    @BindView(R.id.option_food_pay_02)
-    RadioButton option_food_pay_02;
+    @BindView(R.id.option_hobby_01)
+    RadioButton option_hobby_01;
 
-    @BindView(R.id.option_food_divide)
-    RadioGroup option_food_divide;
+    @BindView(R.id.option_hobby_02)
+    RadioButton option_hobby_02;
 
-    @BindView(R.id.option_food_divide_01)
-    RadioButton option_food_divide_01;
+    @BindView(R.id.option_hobby_03)
+    RadioButton option_hobby_03;
 
-    @BindView(R.id.option_food_divide_02)
-    RadioButton option_food_divide_02;
+    @BindView(R.id.option_hobby_04)
+    RadioButton option_hobby_04;
 
     @BindView(R.id.photo_1)
     ImageView ivPhoto1;
@@ -131,7 +131,7 @@ public class FoodDetailActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     private MapFragemnt mMapFragemnt;
     private AlertDialog dialog;
-    FoodWrite mFoodWrite;
+    HobbyWrite mHobbyWrite;
     CommentAdapter mCommentAdapter;
 
     String[] photoUri = {"", ""};
@@ -149,51 +149,72 @@ public class FoodDetailActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     // ---------------------------------------------------------------------------------------------
 
-    String option_food_pay_result;
-    String option_food_divide_result;
+    String option_hobby_result;
+    int option_hobby_result_count;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_food_detail);
+        setContentView(R.layout.activity_hobby_detail);
         ButterKnife.bind(this);
 
         Intent intent_detail = getIntent();
         Bundle bundle = new Bundle();
         if (intent_detail != null) {
-            mFoodWrite = (FoodWrite) intent_detail.getSerializableExtra("FoodWrite");
-            L.e("::::::시리얼 라이저블 : " + mFoodWrite.toString());
+            mHobbyWrite = (HobbyWrite) intent_detail.getSerializableExtra("HobbyWrite");
+            L.e("::::::시리얼 라이저블 : " + mHobbyWrite.toString());
 
-            option_food_pay_result = mFoodWrite.getoption_food_pay_result();
-            option_food_divide_result = mFoodWrite.getoption_food_divide_result();
+            option_hobby_result = mHobbyWrite.getoption_hobby_result();
 
-            tvTitle.setText(mFoodWrite.getTitle());
+            tvTitle.setText(mHobbyWrite.getTitle());
 
-            tvUser.setText(mFoodWrite.getWriter());
-            date.setText(mFoodWrite.getPostingDate());
-            tvTradeDate.setText(mFoodWrite.geteditTradeDate());
-            tvTradeTime.setText(mFoodWrite.geteditTradeTime());
-            //option_food_pay_result.setText(mFoodWrite.getoption_food_pay_result());
-            //option_food_divide_result.setText(mFoodWrite.getoption_food_divide_result());
-            tvAddress.setText(mFoodWrite.getAddress());
-            tvDetailAddress.setText(mFoodWrite.getDescription());
-            tvDiscription.setText(mFoodWrite.getDescription());
+            tvUser.setText(mHobbyWrite.getWriter());
+            date.setText(mHobbyWrite.getPostingDate());
+            tvTradeDate.setText(mHobbyWrite.geteditTradeDate());
+            tvTradeTime.setText(mHobbyWrite.geteditTradeTime());
+            tvCost.setText(mHobbyWrite.geteditCost());
+            //option_hobby_result.setText(mHobbyWrite.getoption_hobby_result());
+            tvAddress.setText(mHobbyWrite.getAddress());
+            tvDetailAddress.setText(mHobbyWrite.getDescription());
+            tvDiscription.setText(mHobbyWrite.getDescription());
 
-            if (mFoodWrite.getoption_food_pay_01() == mFoodWrite.getoption_food_pay_result()) {
-                option_food_pay_01.setChecked(true);
-            } else {
-                option_food_pay_02.setChecked(true);
+            option_hobby_result_count = mHobbyWrite.getoption_hobby_result_count();
+            switch (option_hobby_result_count) {
+                case 1:
+                    option_hobby_01.setChecked(true);
+                    break;
+                case 2:
+                    option_hobby_02.setChecked(true);
+                    break;
+                case 3:
+                    option_hobby_03.setChecked(true);
+                    break;
+                case 4:
+                    option_hobby_04.setChecked(true);
+                    break;
+                default:
+                    Toast.makeText(getApplicationContext(), mHobbyWrite.getoption_hobby_result() +"\n"+ mHobbyWrite.getoption_hobby_01() +"\n"+ mHobbyWrite.getoption_hobby_02() +"\n"+ mHobbyWrite.getoption_hobby_03() +"\n"+ mHobbyWrite.getoption_hobby_04(), Toast.LENGTH_LONG).show();
+                    break;
             }
 
-            if (mFoodWrite.getoption_food_divide_01() == mFoodWrite.getoption_food_divide_result()) {
-                option_food_divide_01.setChecked(true);
+/*
+            if (mHobbyWrite.getoption_hobby_01() == mHobbyWrite.getoption_hobby_result()) {
+                option_hobby_01.setChecked(true);
+            } else if (mHobbyWrite.getoption_hobby_02() == mHobbyWrite.getoption_hobby_result()) {
+                option_hobby_02.setChecked(true);
+            } else if (mHobbyWrite.getoption_hobby_03() == mHobbyWrite.getoption_hobby_result()) {
+                option_hobby_03.setChecked(true);
+            } else if (mHobbyWrite.getoption_hobby_04() == mHobbyWrite.getoption_hobby_result()) {
+                option_hobby_04.setChecked(true);
             } else {
-                option_food_divide_02.setChecked(true);
+                Toast.makeText(getApplicationContext(), mHobbyWrite.getoption_hobby_result() +"\n"+ mHobbyWrite.getoption_hobby_01() +"\n"+ mHobbyWrite.getoption_hobby_02() +"\n"+ mHobbyWrite.getoption_hobby_03() +"\n"+ mHobbyWrite.getoption_hobby_04(), Toast.LENGTH_LONG).show();
             }
+*/
+
 
             mMapFragemnt = MapFragemnt.getInstance();
-            bundle.putDouble(PublicVariable.LATITUDE, Double.valueOf(mFoodWrite.getLatitude()));
-            bundle.putDouble(PublicVariable.LONGITUDE, Double.valueOf(mFoodWrite.getLongitude()));
+            bundle.putDouble(PublicVariable.LATITUDE, Double.valueOf(mHobbyWrite.getLatitude()));
+            bundle.putDouble(PublicVariable.LONGITUDE, Double.valueOf(mHobbyWrite.getLongitude()));
             mMapFragemnt.setArguments(bundle);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -212,7 +233,7 @@ public class FoodDetailActivity extends AppCompatActivity {
                     if (dialog != null && dialog.isShowing()) {
                         dialog.dismiss();
                     }
-                    AlertDialog.Builder builder = new AlertDialog.Builder(FoodDetailActivity.this/*, R.style.Theme_AppCompat_Light_Dialog*/);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(HobbyDetailActivity.this/*, R.style.Theme_AppCompat_Light_Dialog*/);
                     builder.setTitle("답글 달기");
                     LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
                     View view = inflater.inflate(R.layout.dialog_reply, null);
@@ -228,7 +249,7 @@ public class FoodDetailActivity extends AppCompatActivity {
                                 return;
                             }
 
-                            DatabaseReference req = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_FOODS_COMMENT).child(item.getNodeId()).child(item.getChildId());
+                            DatabaseReference req = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_HOBBIES_COMMENT).child(item.getNodeId()).child(item.getChildId());
                             req.runTransaction(new Transaction.Handler() {
                                 @NonNull
                                 @Override
@@ -239,7 +260,7 @@ public class FoodDetailActivity extends AppCompatActivity {
                                     }
 
                                     Map<String, Reply> replyHashMap = comment.getReplyMap();
-                                    String key = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_FOODS_COMMENT).push().getKey();
+                                    String key = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_HOBBIES_COMMENT).push().getKey();
                                     replyHashMap.put(key, new Reply(FirebaseApi.getCurrentUser().getUid(), false, PreferenceHelper.getNickName(getApplicationContext()), new SimpleDateFormat("yyyy/MM/dd").format(System.currentTimeMillis())
                                             , editContent.getText().toString(), key));
                                     comment.setReplyMap(replyHashMap);
@@ -280,7 +301,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         toolBar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("음식주문 글보기");
+        actionBar.setTitle("여가취미 글보기");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_menu_black_24dp);
         // -----------------------------------------------------------------------------------------
@@ -328,7 +349,6 @@ public class FoodDetailActivity extends AppCompatActivity {
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
-/*
                     case R.id.navi_tab3_3:    //음식주문 게시판
                         Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
@@ -347,7 +367,6 @@ public class FoodDetailActivity extends AppCompatActivity {
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
-*/
                     case R.id.navi_tab4:    //무드등
                         Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent = new Intent().setClass( getApplicationContext(), BluetoothLED.class );
@@ -374,7 +393,7 @@ public class FoodDetailActivity extends AppCompatActivity {
 
     public void onLoadComment() {
 
-        DatabaseReference req = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_FOODS_COMMENT).child(mFoodWrite.getId());
+        DatabaseReference req = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_HOBBIES_COMMENT).child(mHobbyWrite.getId());
         req.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -392,7 +411,7 @@ public class FoodDetailActivity extends AppCompatActivity {
             }
         });
 
-        setVaildFirebaseStorage(mFoodWrite.getAddedByUser(), mFoodWrite.getPhotoID());
+        setVaildFirebaseStorage(mHobbyWrite.getAddedByUser(), mHobbyWrite.getPhotoID());
 
     }
 
@@ -410,9 +429,9 @@ public class FoodDetailActivity extends AppCompatActivity {
                 UserModel userModel = dataSnapshot.getValue(UserModel.class);
                 if (userModel != null) {
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
-                    DatabaseReference req = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_FOODS_COMMENT).child(mFoodWrite.getId());
+                    DatabaseReference req = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_HOBBIES_COMMENT).child(mHobbyWrite.getId());
                     String id = req.push().getKey();
-                    Comment comment = new Comment(FirebaseApi.getCurrentUser().getUid(), checkBoxunknownName.isChecked(), userModel.getName(), simpleDateFormat.format(System.currentTimeMillis()), editComment.getText().toString(), mFoodWrite.getId(), id, false);
+                    Comment comment = new Comment(FirebaseApi.getCurrentUser().getUid(), checkBoxunknownName.isChecked(), userModel.getName(), simpleDateFormat.format(System.currentTimeMillis()), editComment.getText().toString(), mHobbyWrite.getId(), id, false);
                     req.child(id).setValue(comment);
                     mCommentAdapter.insertData(comment);
                     editComment.setText("");
@@ -470,7 +489,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         }
 
         for (int index = 0; index < 2; index++) {
-            StorageReference storageRef = storage.getReferenceFromUrl(PublicVariable.FIREBASE_STORAGE).child(PublicVariable.FIREBASE_STORAGE_FOODS).child(key).child("foodImage" + (index + 1) + ".jpg").child(storageKey);
+            StorageReference storageRef = storage.getReferenceFromUrl(PublicVariable.FIREBASE_STORAGE).child(PublicVariable.FIREBASE_STORAGE_HOBBIES).child(key).child("hobbyImage" + (index + 1) + ".jpg").child(storageKey);
             final int success = index;
             storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override

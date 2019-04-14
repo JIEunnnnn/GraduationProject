@@ -13,7 +13,7 @@
         <android.support.v7.widget.Toolbar
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/foodDetailToolbar"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/foodDetailToolbar"
+            android:layout_below="@+id/toolbar"
             android:fillViewport="true"
             android:scrollbars="none">
 
@@ -39,7 +39,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/post_title_food"
+                    android:id="@+id/post_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -60,14 +60,14 @@
                         android:weightSum="1">
 
                         <TextView
-                            android:id="@+id/food_title"
+                            android:id="@+id/title"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.7" />
 
 
                         <TextView
-                            android:id="@+id/food_title_date"
+                            android:id="@+id/title_date"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.3"
@@ -81,7 +81,7 @@
 
 
                 <LinearLayout
-                    android:id="@+id/post_writer_food"
+                    android:id="@+id/post_writer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -96,14 +96,14 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/food_User"
+                        android:id="@+id/User"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/cname" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/post_period_food"
+                    android:id="@+id/post_period"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -261,7 +261,7 @@
                         android:weightSum="1">
 
                         <TextView
-                            android:id="@+id/food_address"
+                            android:id="@+id/address"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.7" />
@@ -319,7 +319,7 @@
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:text="방 사진"
+                        android:text="메뉴판"
                         android:textColor="#111111"
                         android:textSize="11dp"
                         android:textStyle="bold" />
@@ -385,7 +385,7 @@
 
 
                 <LinearLayout
-                    android:id="@+id/post_detail_food"
+                    android:id="@+id/post_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -401,7 +401,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/food_Contents"
+                        android:id="@+id/Contents"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:layout_marginStart="10dp"
@@ -461,7 +461,7 @@
 
     <!-- For Navigation Bar -->
     <android.support.design.widget.NavigationView
-        android:id="@+id/navigationView_food_detail"
+        android:id="@+id/navigationView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

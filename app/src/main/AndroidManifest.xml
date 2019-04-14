@@ -142,8 +142,9 @@
 
         <activity android:name=".BluetoothLED" />
         <activity android:name=".ChattingActivity" />
-        <activity android:name=".chat.MessageActivity"></activity>
-
+        <activity android:name=".chat.MessageActivity" />
+        <activity android:name=".HobbyWriteActivity" />
+        <activity android:name=".HobbyDetailActivity"></activity>
     </application>
 
 </manifest>

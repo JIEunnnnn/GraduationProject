@@ -6,55 +6,52 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.owner.project_final.L;
 import com.example.owner.project_final.R;
-import com.example.owner.project_final.model.FoodWrite;
+import com.example.owner.project_final.model.HobbyWrite;
 
 import java.util.ArrayList;
 
-public abstract class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ItemViewHolder> {
-    public abstract void selectItem(FoodWrite item);
+public abstract class HobbyAdapter extends RecyclerView.Adapter<HobbyAdapter.ItemViewHolder> {
+    public abstract void selectItem(HobbyWrite item);
 
     private Context mContext;
-    private ArrayList<FoodWrite> mFoodWriteList;
+    private ArrayList<HobbyWrite> mHobbyWriteList;
 
-    public FoodAdapter(Context mContext) {
+    public HobbyAdapter(Context mContext) {
         this.mContext = mContext;
-        this.mFoodWriteList = new ArrayList<>();
+        this.mHobbyWriteList = new ArrayList<>();
     }
 
-    public synchronized void insertData(FoodWrite list) {
-        this.mFoodWriteList.add(list);
-        notifyItemInserted(mFoodWriteList.size() - 1);
+    public synchronized void insertData(HobbyWrite list) {
+        this.mHobbyWriteList.add(list);
+        notifyItemInserted(mHobbyWriteList.size() - 1);
     }
 
     public void clear() {
-        if (mFoodWriteList != null && mFoodWriteList.size() > 0) {
-            mFoodWriteList.clear();
+        if (mHobbyWriteList != null && mHobbyWriteList.size() > 0) {
+            mHobbyWriteList.clear();
         }
     }
 
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.food_item_row, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.hobby_item_row, viewGroup, false);
         return new ItemViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        final FoodWrite item = mFoodWriteList.get(position);
+        final HobbyWrite item = mHobbyWriteList.get(position);
         holder.title.setText(item.getTitle());
         holder.date.setText(item.getPostingDate());
         holder.name.setText(item.getWriter());
         holder.address.setText(item.getAddress() + " " + item.getDetailAddress());
         holder.tradeDate.setText(item.geteditTradeDate());
         holder.tradeTime.setText(item.geteditTradeTime());
+        //holder.cost.setText(item.geteditCost());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +63,7 @@ public abstract class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ItemV
 
     @Override
     public int getItemCount() {
-        return mFoodWriteList.size();
+        return mHobbyWriteList.size();
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -75,6 +72,7 @@ public abstract class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ItemV
         private TextView name;
         private TextView tradeDate;
         private TextView tradeTime;
+        //private  TextView cost;
         private TextView address;
 
         public ItemViewHolder(View itemView) {
@@ -84,6 +82,7 @@ public abstract class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ItemV
             name = (TextView) itemView.findViewById(R.id.name);
             tradeDate = (TextView) itemView.findViewById(R.id.tradeDate);
             tradeTime = (TextView) itemView.findViewById(R.id.tradeTime);
+            //cost = (TextView) itemView.findViewById(R.id.cost) ;
             address = (TextView) itemView.findViewById(R.id.address);
         }
     }

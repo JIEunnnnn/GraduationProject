@@ -69,7 +69,6 @@ public class FoodActivity extends AppCompatActivity {
 
     // For Activity finish -------------------------------------------------------------------------
     public static Activity foodActivity;
-    FoodActivity foodact = (FoodActivity) FoodActivity.foodActivity;
     //----------------------------------------------------------------------------------------------
 
     // For Toolbar ---------------------------------------------------------------------------------
@@ -154,7 +153,7 @@ public class FoodActivity extends AppCompatActivity {
         // -----------------------------------------------------------------------------------------
 
         // For Toolbar -----------------------------------------------------------------------------
-        toolBar = (Toolbar)findViewById(R.id.foodToolbar);
+        toolBar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("음식주문 게시판");
@@ -163,8 +162,8 @@ public class FoodActivity extends AppCompatActivity {
         // -----------------------------------------------------------------------------------------
 
         // For Navigation Drawer -------------------------------------------------------------------
-        drawerLayout = (DrawerLayout)findViewById(R.id.activity_food);  //각 레이아웃의 가장 큰 DrawerLayout 이름
-        navigationView = (NavigationView)findViewById(R.id.food_navigationView);
+        drawerLayout = (DrawerLayout)findViewById(R.id.activity);  //각 레이아웃의 가장 큰 DrawerLayout 이름
+        navigationView = (NavigationView)findViewById(R.id.navigationView);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -255,7 +254,7 @@ public class FoodActivity extends AppCompatActivity {
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_single_choice, items);
 
         // listview 생성 및 adapter 지정.
-        listView = (ListView) findViewById(R.id.foodListView);    //해당 리스트뷰 이름
+        listView = (ListView) findViewById(R.id.ListView);    //해당 리스트뷰 이름
         listView.setAdapter(adapter);
 
         count = adapter.getCount();
@@ -287,7 +286,7 @@ public class FoodActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        drawerLayout = (DrawerLayout)findViewById(R.id.activity_food);  //각자에 맞는 레이아웃의 가장 겉 DrawerLayout 이용할 것
+        drawerLayout = (DrawerLayout)findViewById(R.id.activity);  //각자에 맞는 레이아웃의 가장 겉 DrawerLayout 이용할 것
 
         switch (item.getItemId()) {
             case R.id.MainButton_post:
