@@ -47,6 +47,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RegisterActivity extends AppCompatActivity {
+    private static final int PICK_FROM_ALBUM = 10;
     //[오] 2019.04.13 회원가입 로직변경
 
     @BindView(R.id.registerActivity_edittext_email)
@@ -73,21 +74,21 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
 
+        //회원가입 - 프로필사진
+        profile.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                startActivityForResult(intent,PICK_FROM_ALBUM);
+            }
+
+        });
+
+
     }
-/*
-    profile.setOnClickListener(new View.OnClickListener()
-    private static final int RICK_FROM_ALBUM = 10;
 
-    {
-        @Override
-                public void Onclick(View view){
-            Intent intent = new Intent(Intent.ACTION_PICK);
-            intent.setType(MediaStore.Image.Media.CONTENT_TYPE);
-            startActivityForResult(intent,RICK_FROM_ALBUM);
-        }
 
-    });
-    */
 
     private boolean validateForm() {
         boolean result = true;
@@ -126,6 +127,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (!validateForm()) {
             return;
         }
+
         checkVerfication(mNickEdit.getText().toString(), mEmailEdit.getText().toString(), mPasswrodEdit.getText().toString());
     }
 
@@ -133,9 +135,15 @@ public class RegisterActivity extends AppCompatActivity {
         FirebaseApi.createToUserID(email, password, new OnResultListener() {
             @Override
             public void onComplete(Task<AuthResult> task) {
+
+
                 UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(mNickEdit.getText().toString()).build();
 
                 task.getResult().getUser().updateProfile(userProfileChangeRequest);
+
+
+
+
 /*
                 //profile
                 String uid = task.getResult().getUser().getUid();
@@ -172,9 +180,28 @@ public class RegisterActivity extends AppCompatActivity {
         String name = usernameFromEmail(firebaseUser.getEmail());
         String unique_key = firebaseUser.getUid();
 
+
+
         UserModel userModel = new UserModel(nick, firebaseUser.getEmail(), password, "");
         //[소현]채팅위한 uid불러오기 추가 (회원가입시마다 uid가 담기게 됨)
         userModel.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final StorageReference profileImageRef = FirebaseStorage.getInstance().getReference().child("userImages").child(uid);
+
+        profileImageRef.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                String imageUrl = profileImageRef.getDownloadUrl().toString();
+                //UserModel userModel = new UserModel();
+                userModel.profileImageUrl = imageUrl;
+            }
+        });
+
+
+
+
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         if (databaseReference != null) {
@@ -215,7 +242,7 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
         }
     }
-/*
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == PICK_FROM_ALBUM && resultCode == RESULT_OK){
@@ -223,5 +250,5 @@ public class RegisterActivity extends AppCompatActivity {
             imageUri = data.getData();//이미지 경로 원본
         }
     }
-    */
+
 }
