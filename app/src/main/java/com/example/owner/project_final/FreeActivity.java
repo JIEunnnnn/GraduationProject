@@ -1,6 +1,13 @@
 package com.example.owner.project_final;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -8,163 +15,154 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.android.volley.VolleyError;
+import com.example.owner.project_final.adapter.FreeAdapter;
+import com.example.owner.project_final.firebase.FirebaseApi;
+import com.example.owner.project_final.firebase.PublicVariable;
+import com.example.owner.project_final.location.LocationProvider;
+import com.example.owner.project_final.model.FreeWrite;
+import com.example.owner.project_final.volley.VolleyResult;
+import com.example.owner.project_final.volley.VolleyService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class FreeActivity extends AppCompatActivity {
-    // 이부분이 그 사용자들이 게시글을 올리면 그에 대한 정보들을 여기에 출력해야지!
 
-    /* For Toolbar ---------------------------------------------------------------------------------
-    Toolbar toolBar;
-    ----------------------------------------------------------------------------------------------*/
-
-    /* For Navigation Drawer -----------------------------------------------------------------------
     Intent intent;
 
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+    // For Activity finish -------------------------------------------------------------------------
+    public static Activity freeActivity;
+    FreeActivity freeact = (FreeActivity) FreeActivity.freeActivity;
+    //----------------------------------------------------------------------------------------------
+
+    // For Toolbar ---------------------------------------------------------------------------------
+    Toolbar toolBar;
+    //----------------------------------------------------------------------------------------------
+
+    // For Navigation Drawer -----------------------------------------------------------------------
     NavigationView navigationView;
     DrawerLayout drawerLayout;
-    ----------------------------------------------------------------------------------------------*/
+    // ---------------------------------------------------------------------------------------------
+
+    // For ListView --------------------------------------------------------------------------------
+    static ArrayList<String> items;
+    static ArrayAdapter adapter;
+    static ListView listView;
+    static int count, checked;
+    // ---------------------------------------------------------------------------------------------
 
 
+    //[오투잡] mRecyclerView;
+    @BindView(R.id.list)
+    RecyclerView mRecyclerView;
+
+    private FreeAdapter mFreeAdapter;
+
+    private void onLoad() {
+        //[오투잡] Firebase 서버에서 게시판 목록 데이터 요청
+        final ArrayList<String> UserKeyList = new ArrayList<>();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query req = reference.child(PublicVariable.FIREBASE_CHILD_FREES);
 
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+        req.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    UserKeyList.clear();
+                    Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
+                    Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
+                    while ((iterator.hasNext())) {
+                        final String key = iterator.next().getKey();
+                        UserKeyList.add(key);
+                    }
 
-    // freeWrite부분에서 받은 데이터들을 documnetSnspshot으로 출력하기!
-    CollectionReference colRef = db.collection("freeWrite");
+                    for (String userKey : UserKeyList) {
+                        DatabaseReference qurey = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_FREES).child(userKey);
+                        qurey.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                        FreeWrite item = child.getValue(FreeWrite.class);
+                                        mFreeAdapter.insertData(item);
+                                    }
+                                }
+                            }
 
-    ArrayList<String> dataArr = new ArrayList<String>(); // 데이터부분
-    ListView listView; // 데이터를 저장하는 뷰
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                            }
+                        });
+                    }
+                }
+            }
 
-    Button preButton, writeButton ;
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-
-    String title, username, cont;
-
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_free);
+        ButterKnife.bind(this);
 
-        preButton = (Button)findViewById(R.id.fButton);
+        // For Activity finish ---------------------------------------------------------------------
+        freeActivity = FreeActivity.this;
+        // -----------------------------------------------------------------------------------------
 
-        writeButton = (Button) findViewById(R.id.writeButton);
-
-        listView = (ListView) findViewById(R.id.ListView); // 뷰영역
-
-
-        colRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-
-
-                    for(QueryDocumentSnapshot document : task.getResult()){
-                        System.out.println("성공"+document.getData());
-
-                      //  title = document.getString("title");
-                        username = document.getString("user");
-                        cont =   document.getString("contents");
-
-                        dataArr.add(cont);
-
-                    }
-
-                }else{
-                    System.out.println("콜렉션불러오기실패2");
-                }
-
-
-
-                ArrayAdapter<String> adapter
-                        = new ArrayAdapter<String>(
-                        getApplicationContext(), // 현재 화면의 제어권자
-                        android.R.layout.simple_list_item_1,  //한행마다 보여줄 레이아웃을 지정
-                        dataArr); // 다량의 데이터
-
-
-                System.out.println("성공"+adapter);
-                listView.setAdapter(adapter);
-
-
-            }
-        });
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent intent3 = new Intent( FreeActivity.this , freeDetailActivity.class);
-
-                intent3.putExtra("contents", cont);
-                startActivity(intent3);
-            }
-        });
-
-
-
-
-
-        preButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-
-                //이전 페이지로 화면전환
-                Intent intent = new Intent (FreeActivity.this, Tab3Activity.class);
-
-                startActivity(intent);
-            }
-
-        });
-
-        writeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent2 = new Intent (FreeActivity.this , FreeWriteActivity.class);
-                startActivity(intent2);
-            }
-        });
-
-        /* For Toolbar -----------------------------------------------------------------------------
+        // For Toolbar -----------------------------------------------------------------------------
         toolBar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
-
         ActionBar actionBar = getSupportActionBar();
-
-        actionBar.setTitle("우리동네 자취생");
-
+        actionBar.setTitle("자유 게시판");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_menu_black_24dp);
-        ------------------------------------------------------------------------------------------*/
+        // -----------------------------------------------------------------------------------------
 
-        /* For Navigation Drawer -------------------------------------------------------------------
-        drawerLayout = (DrawerLayout)findViewById(R.id.activity_main);
+        // For Navigation Drawer -------------------------------------------------------------------
+        drawerLayout = (DrawerLayout)findViewById(R.id.activity);  //각 레이아웃의 가장 큰 DrawerLayout 이름
         navigationView = (NavigationView)findViewById(R.id.navigationView);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -176,72 +174,216 @@ public class FreeActivity extends AppCompatActivity {
                 int id = item. getItemId();
 
                 switch (id) {
-                    case R.id.navi_tab1:
-                        Toast.makeText(FreeActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
-                        intent = new Intent().setClass( FreeActivity.this,Tab1Activity.class );
+                    case R.id.navi_tab1:    //오늘 하루
+                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(),Tab1Activity.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
-                    case R.id.navi_tab2:
-                        Toast.makeText(FreeActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
-                        intent = new Intent().setClass( FreeActivity.this,Tab2Activity.class );
+                    case R.id.navi_tab2:    //위치 서비스
+                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(),Tab2Activity.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
-                    case R.id.navi_tab3:
-                        Toast.makeText(FreeActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
-                        intent = new Intent().setClass( FreeActivity.this,Tab3Activity.class );
+                    case R.id.navi_tab3:    //게시판
+                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(),Tab3Activity.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
-                    case R.id.navi_tab4:
-                        Toast.makeText(FreeActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+                    case R.id.navi_tab3_1:    //공동구매 게시판
+                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), PurchaseActivity.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                         break;
-                    case R.id.navi_tab5:
-                        Toast.makeText(FreeActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+                    case R.id.navi_tab3_2:    //단기방대여 게시판
+                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), RoomActivity.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                         break;
-                    case R.id.navi_tab6:
-                        Toast.makeText(FreeActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+/*
+                    case R.id.navi_tab3_3:    //음식주문 게시판
+                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                         break;
-
+                    case R.id.navi_tab3_4:    //취미여가 게시판
+                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        break;
+                    case R.id.navi_tab3_5:    //자유게시판
+                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        break;
+*/
+                    case R.id.navi_tab4:    //무드등
+                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), BluetoothLED.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        break;
+/*
+                    case R.id.navi_tab5:    //음성변조
+                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        break;
+                    case R.id.navi_tab6:    //마이페이지
+                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        break;
+*/
                 }
 
                 return true;
             }
         });
-        ------------------------------------------------------------------------------------------*/
+        // -----------------------------------------------------------------------------------------
 
+        // For ListView ----------------------------------------------------------------------------
+        // 빈 데이터 리스트 생성.
+        items = new ArrayList<String>();
+        // ArrayAdapter 생성. 아이템 View를 선택(single choice)가능하도록 만듦.
+        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_single_choice, items);
+
+        // listview 생성 및 adapter 지정.
+        listView = (ListView) findViewById(R.id.listView);    //해당 리스트뷰 이름
+        listView.setAdapter(adapter);
+
+        count = adapter.getCount();
+        checked = listView.getCheckedItemPosition();
+
+        mFreeAdapter = new FreeAdapter(getApplicationContext()) {
+            @Override
+            public void selectItem(FreeWrite item) {
+                L.e(":::::Click item : " + item.toString());
+                Intent intent = new Intent(FreeActivity.this, FreeDetailActivity.class);
+                intent.putExtra("FreeWrite", item);
+                startActivity(intent);
+            }
+        };
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mRecyclerView.setAdapter(mFreeAdapter);
+        onLoad();
     }
 
-    /* For Toolbar ---------------------------------------------------------------------------------
+    // For Toolbar ---------------------------------------------------------------------------------
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu, menu);
+        menuInflater.inflate(R.menu.post_menu, menu);    //게시판 목록용 메뉴
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //return super.onOptionsItemSelected(item);
 
-//        drawerLayout = (DrawerLayout)findViewById(R.id.activity_main);
+        drawerLayout = (DrawerLayout)findViewById(R.id.activity);
 
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                Toast.makeText(getApplicationContext(), "환경설정 버튼 클릭됨", Toast.LENGTH_LONG).show();
+            case R.id.MainButton_post:
+                intent = new Intent().setClass( getApplicationContext(), MainActivity.class );  //MainActivity로 이동
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 return true;
-
-            case R.id.action_mypage:
-                Toast.makeText(getApplicationContext(), "마이페이지 버튼 클릭됨", Toast.LENGTH_LONG).show();
+            case R.id.ChatButton_post:
+                intent = new Intent().setClass( getApplicationContext(), ChattingActivity.class );  //ChattingActivity로 이동
+                startActivity(intent);
                 return true;
-
             case android.R.id.home:
-//                drawerLayout.openDrawer(GravityCompat.START);
+                drawerLayout.openDrawer(GravityCompat.START);
                 return true;
-
+            case R.id.action_write_post:
+                //[오투잡] 2019.04.12 글쓰기 버튼 클릭시 수정
+                if (!gpsEnabled()) {
+                    int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.95);
+                    int height = WindowManager.LayoutParams.WRAP_CONTENT;
+                    new AlertDialog.Builder(FreeActivity.this, R.style.Theme_AppCompat_Light_Dialog)
+                            .setMessage("계속하려면 Google 위치 서비스를 \n사용하는 기기 위치 기능을 사용 설정하세요")
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), PublicVariable.GPS_REQUEST_CODE);
+                                }
+                            }).setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                        }
+                    }).show().getWindow().setLayout(width, height);
+                } else {
+                    Dexter.withActivity(FreeActivity.this).withPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION).withListener(new MultiplePermissionsListener() {
+                        @Override
+                        public void onPermissionsChecked(MultiplePermissionsReport report) {
+                            if (report.areAllPermissionsGranted()) {
+                                intent = new Intent().setClass(FreeActivity.this, FreeWriteActivity.class);
+                                startActivity(intent);
+                                freeActivity.finish();
+                                overridePendingTransition(0, 0);
+                            }
+                        }
+                        @Override
+                        public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                            token.continuePermissionRequest();
+                        }
+                    }).check();
+                }
+                return true;
+            case R.id.action_modify_post:
+                Toast.makeText(getApplicationContext(), "글수정 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                if (count > 0) {
+                    if (checked > -1 && checked < count) {
+                        // 아이템 수정
+                        items.set(checked, Integer.toString(checked + 1) + "번 아이템 수정");
+                        // listview 갱신
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+                return true;
+            case R.id.action_erase_post:
+                Toast.makeText(getApplicationContext(), "글삭제 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                if (count > 0) {
+                    if (checked > -1 && checked < count) {
+                        // 아이템 삭제
+                        items.remove(checked);
+                        // listview 선택 초기화.
+                        listView.clearChoices();
+                        // listview 갱신.
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+                return true;
+            case R.id.MyPageButton_post:
+                intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );    //MypageActivity로 이동
+                startActivity(intent);
+                return true;
+            case R.id.LogOutButton_post:
+                if(user != null){
+                    FirebaseAuth.getInstance().signOut();
+                    intent = new Intent().setClass( getApplicationContext(), LoginActivity.class ); //로그아웃 후 LoginActivity로 이동
+                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "로그아웃 성공", Toast.LENGTH_LONG).show();
+                    overridePendingTransition(0, 0);
+                }else{
+                    Toast.makeText(getApplicationContext(), "로그아웃 실패", Toast.LENGTH_LONG).show();
+                }
+                return true;
             default:
                 Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return super.onOptionsItemSelected(item);
         }
     }
-    ----------------------------------------------------------------------------------------------*/
+
+    public boolean gpsEnabled() {
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        return manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+    //----------------------------------------------------------------------------------------------
 }

@@ -70,7 +70,7 @@
 
         <activity android:name=".FreeActivity" />
         <activity android:name=".FreeWriteActivity" />
-        <activity android:name=".freeDetailActivity" />
+        <activity android:name=".FreeDetailActivity" />
         <activity android:name=".FreeredeActivity" />
         <activity android:name=".FreereviseActivity" />
 

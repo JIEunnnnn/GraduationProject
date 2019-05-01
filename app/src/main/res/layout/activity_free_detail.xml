@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_food_detail">
+    android:id="@+id/activity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -75,8 +75,6 @@
                             android:textColor="#111111" />
 
                     </LinearLayout>
-
-
                 </LinearLayout>
 
 
@@ -90,6 +88,7 @@
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:text="작성자"
                         android:textColor="#111111"
                         android:textSize="11dp"
@@ -99,178 +98,36 @@
                         android:id="@+id/User"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:hint="@string/cname" />
                 </LinearLayout>
 
+
                 <LinearLayout
-                    android:id="@+id/post_period"
+                    android:id="@+id/post_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="55dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tradeDate"
-                        android:textColor="#111111"
-                        android:textSize="11dp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/editTradeDate"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="55dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/tradeTime"
+                        android:text="@string/detail"
                         android:textColor="#111111"
                         android:textSize="11dp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/editTradeTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|center_horizontal"
-                        android:text="결제 방식"
-                        android:textColor="#111111"
-                        android:textSize="11dp"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
+                        android:id="@+id/Contents"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <RadioGroup
-                            android:id="@+id/option_food_pay"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <RadioButton
-                                android:id="@+id/option_food_pay_01"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:checked="false"
-                                android:text="전체 1/n"
-                                android:textSize="9dp" />
-
-                            <RadioButton
-                                android:id="@+id/option_food_pay_02"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="4"
-                                android:checked="false"
-                                android:text="더치페이"
-                                android:textSize="9dp" />
-                        </RadioGroup>
-                    </LinearLayout>
+                        android:layout_height="150dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/round_square_02"
+                        android:scrollbars="vertical" />
                 </LinearLayout>
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|center_horizontal"
-                        android:text="대여 제한"
-                        android:textColor="#111111"
-                        android:textSize="11dp"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <RadioGroup
-                            android:id="@+id/option_food_divide"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <RadioButton
-                                android:id="@+id/option_food_divide_01"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:checked="false"
-                                android:text="전체 1/n"
-                                android:textSize="9dp" />
-
-                            <RadioButton
-                                android:id="@+id/option_food_divide_02"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:checked="false"
-                                android:text="시킨 메뉴만 픽업"
-                                android:textSize="9dp" />
-                        </RadioGroup>
-                    </LinearLayout>
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|center_horizontal"
-                        android:text="거래 주소"
-                        android:textColor="#111111"
-                        android:textSize="11dp"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
-
-                        <TextView
-                            android:id="@+id/address"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.7" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-
+<!-- 사진 삽입
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -280,46 +137,7 @@
                     <TextView
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:text="상세 주소"
-                        android:textColor="#111111"
-                        android:textSize="11dp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/detail_address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <View
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content" />
-
-                    <FrameLayout
-                        android:id="@+id/fragment_placeholder"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:text="메뉴판"
+                        android:text="기타 사진"
                         android:textColor="#111111"
                         android:textSize="11dp"
                         android:textStyle="bold" />
@@ -382,32 +200,7 @@
 
                     </LinearLayout>
                 </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/post_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/detail"
-                        android:textColor="#111111"
-                        android:textSize="11dp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/Contents"
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:layout_marginStart="10dp"
-                        android:background="@drawable/round_square_02"
-                        android:scrollbars="vertical" />
-                </LinearLayout>
-
+-->
 
                 <LinearLayout
                     android:id="@+id/comment_form"
