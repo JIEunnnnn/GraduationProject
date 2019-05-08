@@ -93,7 +93,7 @@
             android:screenOrientation="portrait" />
 
         <activity android:name=".GameActivity" />
-
+        <activity android:name=".ClearActivity"/>
 
         <!--
           <service

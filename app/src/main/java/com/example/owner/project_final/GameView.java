@@ -31,6 +31,7 @@ public class GameView extends TextureView implements TextureView.SurfaceTextureL
     private long mGameStartTime;
     private Handler mHandler ;
 
+
     public GameView(final Context context) {
         super(context);
         setSurfaceTextureListener(this);
@@ -112,6 +113,7 @@ public class GameView extends TextureView implements TextureView.SurfaceTextureL
                         Block topBlock = getBlock(mBall.getX(), ballTop);
                         Block rightBlock = getBlock(ballRight, mBall.getY());
                         Block bottomBlock = getBlock(mBall.getX(), ballBottom);
+
                         boolean isCollision = false;
                         if(leftBlock != null){
                             mBall.setSpeedX(-mBall.getSpeedX());
