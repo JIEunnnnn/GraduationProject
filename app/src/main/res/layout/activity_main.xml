@@ -108,7 +108,7 @@
                         android:textStyle="bold"
                         android:background="@drawable/round_button_03"
                         android:textColor="@color/ViewPager_Tab_Button_Background"
-                        android:text="@string/btn_fifth"/>
+                        android:text="미니게임"/>
                 </LinearLayout>
 
                 <LinearLayout

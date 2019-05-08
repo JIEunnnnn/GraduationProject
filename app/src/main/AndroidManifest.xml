@@ -91,6 +91,9 @@
             android:name=".NoticeActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".GameActivity" />
+
+
         <!--
           <service
               android:name=".MyFirebaseMessagingService">

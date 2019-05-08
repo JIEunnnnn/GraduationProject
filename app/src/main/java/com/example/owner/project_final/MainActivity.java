@@ -118,19 +118,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*
+
 
         btn_fifth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent().setClass( getApplicationContext(),Tab2Activity.class );
+                intent = new Intent().setClass( getApplicationContext(),GameActivity.class );
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
 
             }
         });
-*/
+
         btn_sixth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
