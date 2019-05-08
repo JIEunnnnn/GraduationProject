@@ -21,7 +21,7 @@
     <string name="btn_second">위치</string>
     <string name="btn_third">게시판</string>
     <string name="btn_fourth">무드등</string>
-    <string name="btn_fifth">음성변조</string>
+    <string name="btn_fifth">미니게임</string>
     <string name="btn_sixth">자유게시판</string>
 
     <!-- RegisterActivity String Collection -->

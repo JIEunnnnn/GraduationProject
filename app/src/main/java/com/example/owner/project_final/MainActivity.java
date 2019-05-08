@@ -68,16 +68,96 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_menu_black_24dp);
         // -----------------------------------------------------------------------------------------
 
+        // For Navigation Drawer -------------------------------------------------------------------
+        drawerLayout = (DrawerLayout)findViewById(R.id.activity);  //각 레이아웃의 가장 큰 DrawerLayout 이름
+        navigationView = (NavigationView)findViewById(R.id.navigationView);
 
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+                drawerLayout.closeDrawers();
+
+                int id = item. getItemId();
+
+                switch (id) {
+                    case R.id.navi_tab1:    //오늘 하루
+                        //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(),Tab1Activity.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        break;
+                    case R.id.navi_tab2:    //위치 서비스
+                        //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(),Tab2Activity.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        break;
+                    case R.id.navi_tab3:    //게시판
+                        //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(),Tab3Activity.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        break;
+                    case R.id.navi_tab3_1:    //공동구매 게시판
+                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), PurchaseActivity.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        break;
+                    case R.id.navi_tab3_2:    //단기방대여 게시판
+                        //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), RoomActivity.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        break;
+                    case R.id.navi_tab3_3:    //음식주문 게시판
+                        ////Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        break;
+                    case R.id.navi_tab3_4:    //취미여가 게시판
+                        //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        break;
+                    case R.id.navi_tab3_5:    //자유게시판
+                        //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        break;
+                    case R.id.navi_tab4:    //무드등
+                        //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), BluetoothLED.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        break;
+                    case R.id.navi_tab5:    //미니게임
+                        //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), GameActivity.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        break;
+                    case R.id.navi_tab6:    //마이페이지
+                        //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        break;
+                }
+
+                return true;
+            }
+        });
+        // -----------------------------------------------------------------------------------------
 
         Button btn_first=(Button)findViewById(R.id.btn_first);  //tab1
         Button btn_second=(Button)findViewById(R.id.btn_second);    //tab2
         Button btn_third=(Button)findViewById(R.id.btn_third);  //tab3
         Button btn_fourth=(Button)findViewById(R.id.btn_fourth);    //LED
-        Button btn_fifth=(Button)findViewById(R.id.btn_fifth);  //EQ
+        Button btn_fifth=(Button)findViewById(R.id.btn_fifth);  //Game
         Button btn_sixth=(Button)findViewById(R.id.btn_sixth);  //FreeActivity
-        Button chatButton=(Button)findViewById(R.id.chatButton);
-
 
         btn_first.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,34 +197,21 @@ public class MainActivity extends AppCompatActivity {
                 overridePendingTransition(0, 0);
             }
         });
-
-        /*
-
         btn_fifth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent().setClass( getApplicationContext(),Tab2Activity.class );
+                intent = new Intent().setClass( getApplicationContext(),GameActivity.class );
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
 
             }
         });
-*/
         btn_sixth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent().setClass( getApplicationContext(), FreeActivity.class );
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                overridePendingTransition(0, 0);
-            }
-        });
-
-        chatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intent = new Intent().setClass( getApplicationContext(),ChattingActivity.class );
                 startActivity(intent);
                 overridePendingTransition(0, 0);
             }
@@ -181,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.MyPageButton:
-                intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );    //MyㅔageActivity로 이동
+                intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );    //MypageActivity로 이동
                 startActivity(intent);
                 return true;
             case R.id.LogOutButton:
@@ -196,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
             default:
-                Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return super.onOptionsItemSelected(item);
         }
     }

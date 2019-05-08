@@ -175,19 +175,19 @@ public class HobbyActivity extends AppCompatActivity {
 
                 switch (id) {
                     case R.id.navi_tab1:    //오늘 하루
-                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent = new Intent().setClass( getApplicationContext(),Tab1Activity.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
                     case R.id.navi_tab2:    //위치 서비스
-                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent = new Intent().setClass( getApplicationContext(),Tab2Activity.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
                     case R.id.navi_tab3:    //게시판
-                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent = new Intent().setClass( getApplicationContext(),Tab3Activity.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
@@ -199,47 +199,45 @@ public class HobbyActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.navi_tab3_2:    //단기방대여 게시판
-                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent = new Intent().setClass( getApplicationContext(), RoomActivity.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
-/*
                     case R.id.navi_tab3_3:    //음식주문 게시판
-                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        ////Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
                     case R.id.navi_tab3_4:    //취미여가 게시판
-                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
                     case R.id.navi_tab3_5:    //자유게시판
-                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
-*/
                     case R.id.navi_tab4:    //무드등
-                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                         intent = new Intent().setClass( getApplicationContext(), BluetoothLED.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
-/*
-                    case R.id.navi_tab5:    //음성변조
-                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                    case R.id.navi_tab5:    //미니게임
+                        //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), GameActivity.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         break;
                     case R.id.navi_tab6:    //마이페이지
-                        Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
+                        intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         break;
-*/
                 }
 
                 return true;
