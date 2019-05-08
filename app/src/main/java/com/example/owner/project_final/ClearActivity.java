@@ -13,12 +13,14 @@ public class ClearActivity extends AppCompatActivity {
     public static final String EXTRA_BLOCK_COUNT = "EXTRA.BLOCK_COUNT";
     public static final String EXTRA_TIME = "EXTRA.TIME";
 
+
     @SuppressLint("StringFormatMatches")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_clear);
+        setContentView(R.layout.activity_clear);
         Intent receiveIntent = getIntent();
+
         if (receiveIntent == null) {
             finish();
         }
@@ -43,6 +45,7 @@ public class ClearActivity extends AppCompatActivity {
 
         textBlockCount.setText(getString(R.string.block_count, blockCount));
         textClearTime.setText(getString(R.string.time, clearTime / 1000, clearTime % 1000));
+
         gameStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
