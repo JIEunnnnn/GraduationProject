@@ -43,13 +43,13 @@ public class ClearActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clear);
-        Intent receiveIntent = getIntent();
+
 
         // For Toolbar -----------------------------------------------------------------------------
         toolBar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("miniminimini game");
+        actionBar.setTitle("MinimiNi game");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_menu_black_24dp);
         // -----------------------------------------------------------------------------------------
@@ -137,6 +137,7 @@ public class ClearActivity extends AppCompatActivity {
             }
         });
         // -----------------------------------------------------------------------------------------
+        Intent receiveIntent = getIntent();
 
         if (receiveIntent == null) {
             finish();
@@ -145,19 +146,27 @@ public class ClearActivity extends AppCompatActivity {
         if (receiveExtras == null) {
             finish();
         }
-            boolean isClear = receiveExtras.getBoolean(EXTRA_IS_CLEAR, false);
-            int blockCount = receiveExtras.getInt(EXTRA_BLOCK_COUNT, 0);
-            long clearTime = receiveExtras.getLong(EXTRA_TIME, 0);
 
-            TextView textTitle = (TextView) findViewById(R.id.textTitle);
-            TextView textBlockCount = (TextView)findViewById(R.id.textBlockCount);
-            TextView textClearTime = (TextView)findViewById(R.id.textClearTime);
-            Button gameStart = (Button)findViewById(R.id.buttonGameStart);
+        boolean isClear = receiveExtras.getBoolean(EXTRA_IS_CLEAR, false);
+        int blockCount = receiveExtras.getInt(EXTRA_BLOCK_COUNT, 0);
+        long clearTime = receiveExtras.getLong(EXTRA_TIME, 0);
 
-            if (isClear) {
-                textTitle.setText(R.string.clear);
+        TextView textTitle = (TextView) findViewById(R.id.textTitle);
+        TextView textBlockCount = (TextView)findViewById(R.id.textBlockCount);
+        TextView textClearTime = (TextView)findViewById(R.id.textClearTime);
+        Button gameStart = (Button)findViewById(R.id.buttonGameStart);
+        String clear = getString(R.string.clear);
+        String over = getString(R.string.game_over);
+
+        if (isClear) {
+
+            textTitle.setText(clear);
+            //textTitle.setText(R.string.clear);
         } else {
-            textTitle.setText(R.string.game_over);
+
+            textTitle.setText(over);
+
+            //textTitle.setText(R.string.game_over);
         }
 
         textBlockCount.setText(getString(R.string.block_count, blockCount));

@@ -32,12 +32,15 @@ public class GameView extends TextureView implements TextureView.SurfaceTextureL
     private Handler mHandler ;
 
 
+
     public GameView(final Context context) {
         super(context);
         setSurfaceTextureListener(this);
         setOnTouchListener(this);
 
+
         mHandler = new Handler() {
+            // UI Thread에서 실행되는 핸들러
             @Override
             public void handleMessage(Message msg){
                 Intent intent = new Intent(context, ClearActivity.class);	// 추가
@@ -47,8 +50,8 @@ public class GameView extends TextureView implements TextureView.SurfaceTextureL
             }
         };
 
-
     }
+
 
 
     public void start(){
@@ -115,6 +118,7 @@ public class GameView extends TextureView implements TextureView.SurfaceTextureL
                         Block bottomBlock = getBlock(mBall.getX(), ballBottom);
 
                         boolean isCollision = false;
+
                         if(leftBlock != null){
                             mBall.setSpeedX(-mBall.getSpeedX());
                             leftBlock.collision();
@@ -163,12 +167,14 @@ public class GameView extends TextureView implements TextureView.SurfaceTextureL
                             item.draw(canvas,paint);
                         }
                         unlockCanvasAndPost(canvas);
+
                         if(isCollision && getBlockCount() == 0){
                             Message message = Message.obtain();
                             Bundle bundle = new Bundle();
                             bundle.putBoolean(ClearActivity.EXTRA_IS_CLEAR, true);
                             bundle.putInt(ClearActivity.EXTRA_BLOCK_COUNT,0);
-                            bundle.putLong(ClearActivity.EXTRA_TIME, System.currentTimeMillis() - mGameStartTime); message.setData(bundle);
+                            bundle.putLong(ClearActivity.EXTRA_TIME, System.currentTimeMillis() - mGameStartTime);
+                            message.setData(bundle);
                             mHandler.sendMessage(message);
                         }
 

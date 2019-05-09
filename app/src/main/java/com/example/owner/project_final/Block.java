@@ -44,7 +44,8 @@ public class Block implements DrawableItem {
                 }
             }
             // 블록색깔 나중에 바꾸기
-            paint.setColor(Color.YELLOW);
+
+            paint.setColor(Color.rgb(255, 160, 0));
             paint.setStyle(Paint.Style.FILL);
             canvas.drawRect(mLeft,mTop,mRight,mBottom,paint);
             // 테두리선 부분 그리기
