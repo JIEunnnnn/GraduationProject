@@ -117,6 +117,8 @@ public class FreeDetailActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     // ---------------------------------------------------------------------------------------------
 
+    String id;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +130,8 @@ public class FreeDetailActivity extends AppCompatActivity {
         if (intent_detail != null) {
             mFreeWrite = (FreeWrite) intent_detail.getSerializableExtra("FreeWrite");
             L.e("::::::시리얼 라이저블 : " + mFreeWrite.toString());
+
+            id = mFreeWrite.getId();    //키 값 가져오기
 
             tvTitle.setText(mFreeWrite.getTitle());
 
@@ -416,14 +420,14 @@ public class FreeDetailActivity extends AppCompatActivity {
         }
     }
 */
-    // For Toolbar ---------------------------------------------------------------------------------
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //return super.onCreateOptionsMenu(menu);
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_general, menu);    //게시판 목록 외에서 사용할 툴바 메뉴
-        return true;
-    }
+// For Toolbar ---------------------------------------------------------------------------------
+@Override
+public boolean onCreateOptionsMenu(Menu menu) {
+    //return super.onCreateOptionsMenu(menu);
+    MenuInflater menuInflater = getMenuInflater();
+    menuInflater.inflate(R.menu.menu, menu);    //게시판 상세에서 사용할 툴바 메뉴
+    return true;
+}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -444,8 +448,20 @@ public class FreeDetailActivity extends AppCompatActivity {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
+/*
+            case R.id.action_modify:
+                intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );    //글 수정으로 이동
+                startActivity(intent);
+                return true;
+*/
+            case R.id.action_erase:
+                FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_FREES).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(id).removeValue();
+                intent = new Intent().setClass( getApplicationContext(), FreeActivity.class );    //글 목록으로 이동
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
             case R.id.MyPageButton:
-                intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );    //MyㅔageActivity로 이동
+                intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );    //MypageActivity로 이동
                 startActivity(intent);
                 return true;
             case R.id.LogOutButton:

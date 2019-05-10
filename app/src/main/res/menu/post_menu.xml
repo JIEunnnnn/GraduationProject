@@ -20,14 +20,6 @@
         android:title="@string/write"
         app:showAsAction="never"/>
 
-    <item android:id="@+id/action_erase_post"
-        android:title="@string/erase"
-        app:showAsAction="never" />
-
-    <item android:id="@+id/action_modify_post"
-        android:title="@string/modify"
-        app:showAsAction="never" />
-
     <item android:id="@+id/MyPageButton_post"
         android:title="@string/mypage"
         app:showAsAction="never"/>

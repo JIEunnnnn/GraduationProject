@@ -149,6 +149,8 @@ public class FoodDetailActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     // ---------------------------------------------------------------------------------------------
 
+    String id;
+
     String option_food_pay_result;
     String option_food_divide_result;
 
@@ -163,6 +165,8 @@ public class FoodDetailActivity extends AppCompatActivity {
         if (intent_detail != null) {
             mFoodWrite = (FoodWrite) intent_detail.getSerializableExtra("FoodWrite");
             L.e("::::::시리얼 라이저블 : " + mFoodWrite.toString());
+
+            id = mFoodWrite.getId();    //키 값 가져오기
 
             option_food_pay_result = mFoodWrite.getoption_food_pay_result();
             option_food_divide_result = mFoodWrite.getoption_food_divide_result();
@@ -489,7 +493,7 @@ public class FoodDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_general, menu);    //게시판 목록 외에서 사용할 툴바 메뉴
+        menuInflater.inflate(R.menu.menu, menu);    //게시판 목록 외에서 사용할 툴바 메뉴
         return true;
     }
 
@@ -511,6 +515,18 @@ public class FoodDetailActivity extends AppCompatActivity {
                 return true;
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+/*
+            case R.id.action_modify:
+                intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );    //글 수정으로 이동
+                startActivity(intent);
+                return true;
+*/
+            case R.id.action_erase:
+                FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_FOODS).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(id).removeValue();
+                intent = new Intent().setClass( getApplicationContext(), FoodActivity.class );    //글 목록으로 이동
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 return true;
             case R.id.MyPageButton:
                 intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );    //MyㅔageActivity로 이동

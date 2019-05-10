@@ -159,6 +159,8 @@ public class RoomDetailActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     // ---------------------------------------------------------------------------------------------
 
+    String id;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,6 +172,8 @@ public class RoomDetailActivity extends AppCompatActivity {
         if (intent_detail != null) {
             mRoomWrite = (RoomWrite) intent_detail.getSerializableExtra("RoomWrite");
             L.e("::::::시리얼 라이저블 : " + mRoomWrite.toString());
+
+            id = mRoomWrite.getId();    //키 값 가져오기
 
             tvTitle.setText(mRoomWrite.getTitle());
 
@@ -517,7 +521,7 @@ public class RoomDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_general, menu);    //게시판 목록 외에서 사용할 툴바 메뉴
+        menuInflater.inflate(R.menu.menu, menu);    //게시판 목록 외에서 사용할 툴바 메뉴
         return true;
     }
 
@@ -542,6 +546,18 @@ public class RoomDetailActivity extends AppCompatActivity {
                 return true;
             case R.id.MyPageButton:
                 intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );    //MyㅔageActivity로 이동
+                startActivity(intent);
+                return true;
+/*
+            case R.id.action_modify:
+                intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );    //글 수정으로 이동
+                startActivity(intent);
+                return true;
+*/
+            case R.id.action_erase:
+                FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_ROOMS).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(id).removeValue();
+                intent = new Intent().setClass( getApplicationContext(), RoomActivity.class );    //글 목록으로 이동
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;
             case R.id.LogOutButton:

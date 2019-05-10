@@ -60,7 +60,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FreeActivity extends AppCompatActivity {
+public class
+FreeActivity extends AppCompatActivity {
 
     Intent intent;
 
@@ -332,30 +333,6 @@ public class FreeActivity extends AppCompatActivity {
                             token.continuePermissionRequest();
                         }
                     }).check();
-                }
-                return true;
-            case R.id.action_modify_post:
-                Toast.makeText(getApplicationContext(), "글수정 버튼 클릭됨", Toast.LENGTH_LONG).show();
-                if (count > 0) {
-                    if (checked > -1 && checked < count) {
-                        // 아이템 수정
-                        items.set(checked, Integer.toString(checked + 1) + "번 아이템 수정");
-                        // listview 갱신
-                        adapter.notifyDataSetChanged();
-                    }
-                }
-                return true;
-            case R.id.action_erase_post:
-                Toast.makeText(getApplicationContext(), "글삭제 버튼 클릭됨", Toast.LENGTH_LONG).show();
-                if (count > 0) {
-                    if (checked > -1 && checked < count) {
-                        // 아이템 삭제
-                        items.remove(checked);
-                        // listview 선택 초기화.
-                        listView.clearChoices();
-                        // listview 갱신.
-                        adapter.notifyDataSetChanged();
-                    }
                 }
                 return true;
             case R.id.MyPageButton_post:

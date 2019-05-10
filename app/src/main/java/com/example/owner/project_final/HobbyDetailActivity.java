@@ -149,6 +149,8 @@ public class HobbyDetailActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     // ---------------------------------------------------------------------------------------------
 
+    String id;
+
     String option_hobby_result;
     int option_hobby_result_count;
 
@@ -163,6 +165,8 @@ public class HobbyDetailActivity extends AppCompatActivity {
         if (intent_detail != null) {
             mHobbyWrite = (HobbyWrite) intent_detail.getSerializableExtra("HobbyWrite");
             L.e("::::::시리얼 라이저블 : " + mHobbyWrite.toString());
+
+            id = mHobbyWrite.getId();    //키 값 가져오기
 
             option_hobby_result = mHobbyWrite.getoption_hobby_result();
 
@@ -510,7 +514,7 @@ public class HobbyDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_general, menu);    //게시판 목록 외에서 사용할 툴바 메뉴
+        menuInflater.inflate(R.menu.menu, menu);    //게시판 목록 외에서 사용할 툴바 메뉴
         return true;
     }
 
@@ -535,6 +539,18 @@ public class HobbyDetailActivity extends AppCompatActivity {
                 return true;
             case R.id.MyPageButton:
                 intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );    //MyㅔageActivity로 이동
+                startActivity(intent);
+                return true;
+/*
+            case R.id.action_modify:
+                intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );    //글 수정으로 이동
+                startActivity(intent);
+                return true;
+*/
+            case R.id.action_erase:
+                FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_HOBBIES).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(id).removeValue();
+                intent = new Intent().setClass( getApplicationContext(), HobbyActivity.class );    //글 목록으로 이동
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;
             case R.id.LogOutButton:
