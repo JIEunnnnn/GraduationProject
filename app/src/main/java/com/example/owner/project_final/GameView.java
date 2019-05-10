@@ -74,7 +74,7 @@ public class GameView extends TextureView implements TextureView.SurfaceTextureL
                         if(canvas==null){
                             continue; // 캔버스를 잠글수없다면 다시 while문으로 이동
                         }
-                        canvas.drawColor(Color.BLACK);
+                        canvas.drawColor(Color.WHITE);
 
                         float padLeft = mTouchedX - mPadHalfWidth;
                         float padRight = mTouchedX + mPadHalfWidth;

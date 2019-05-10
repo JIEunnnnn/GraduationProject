@@ -44,7 +44,6 @@ public class ClearActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clear);
 
-
         // For Toolbar -----------------------------------------------------------------------------
         toolBar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);

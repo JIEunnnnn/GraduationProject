@@ -146,8 +146,6 @@ public class Tab3Activity extends MainActivity {
         final Button foodButton = (Button) findViewById(R.id.foodButton); // 음식배달
         final Button hobbyButton = (Button) findViewById(R.id.hobbyButton); // 취미공유
         final Button roomButton = (Button) findViewById(R.id.roomButton); // 단기방대여
-
-        Button noticeButton = (Button) findViewById(R.id.noticeButton);   // 공지버튼
         final Button freeButton = (Button) findViewById(R.id.freeButton);    // 자유게시판 버튼
 
         purchaseButton.setOnClickListener(new View.OnClickListener() {
@@ -183,14 +181,6 @@ public class Tab3Activity extends MainActivity {
             @Override
             public void onClick(View v) {
                 intent = new Intent(getApplicationContext(), HobbyActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        noticeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intent = new Intent(getApplicationContext(), NoticeActivity.class);
                 startActivity(intent);
             }
         });

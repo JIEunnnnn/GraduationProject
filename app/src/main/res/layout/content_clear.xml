@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/activity"
     android:visibility="visible"
     tools:context=".ClearActivity"
     tools:showIn="@layout/activity_clear">
@@ -25,46 +26,53 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"></android.support.v7.widget.Toolbar>
         <!-- /For Toolbar -->
 
-        <TextView
-            android:id="@+id/textTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:textColor="@color/colorPrimaryDark"
-            android:text="Large Text"
-            android:textSize="50dp"
-            android:visibility="visible" />
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/textTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="15dp"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="Large Text"
+                android:textStyle="bold"
+                android:textSize="50dp"
+                android:visibility="visible" />
 
-        <TextView
-            android:layout_below="@+id/textTitle"
-            android:id="@+id/textBlockCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <TextView
+                android:layout_below="@+id/textTitle"
+                android:id="@+id/textBlockCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Medium Text"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/textClearTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textBlockCount"
-            android:layout_centerHorizontal="true"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <TextView
+                android:id="@+id/textClearTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Medium Text"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <Button
-            android:id="@+id/buttonGameStart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textClearTime"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/round_button_03"
-            android:text="game_start" />
+            <Button
+                android:id="@+id/buttonGameStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="30dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/round_button_03"
+                android:text="game_start" /></LinearLayout>
     </RelativeLayout>
 
     <!-- For Navigation Bar -->

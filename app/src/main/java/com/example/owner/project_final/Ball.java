@@ -55,7 +55,7 @@ public class Ball implements DrawableItem {
         mY +=mSpeedY;
     }
     public void draw(Canvas canvas, Paint paint){
-        paint.setColor(Color.WHITE);
+        paint.setColor(0xffff6d00);
         paint.setStyle(Paint.Style.FILL);
         canvas.drawCircle(mX,mY,mRadius, paint);
     }
