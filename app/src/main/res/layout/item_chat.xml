@@ -10,6 +10,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/chatitem_imageview"
+        android:src="@drawable/icon_account"
         />
 
     <RelativeLayout

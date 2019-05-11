@@ -1,23 +1,18 @@
 package com.example.owner.project_final.fragment;
 
 import android.app.ActivityOptions;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.os.CpuUsageInfo;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-//import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 import com.example.owner.project_final.R;
 import com.example.owner.project_final.chat.MessageActivity;
 import com.example.owner.project_final.model.ChatModel;
@@ -36,6 +31,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.TreeMap;
+
+//import android.support.v4.app.Fragment;
 
 public class ChatFragment extends Fragment {
 
@@ -103,16 +100,14 @@ public class ChatFragment extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     UserModel userModel = dataSnapshot.getValue(UserModel.class);
-/*
+
+                    /*
                     Glide.with(customViewHolder.itemView.getContext())
                             .load(userModel.profileImageUrl)
-                            .apply(new RequestOptions().circleCrop())
+                            //.apply(new RequestOptions().circleCrop())
                             .into(customViewHolder.imageView);
-
 */
-
-customViewHolder.textView_title.setText(userModel.getName());
-//오류떠서 주석달았음
+                    customViewHolder.textView_title.setText(userModel.getName());//오류떠서 주석달았음(x)
                 }
 
                 @Override

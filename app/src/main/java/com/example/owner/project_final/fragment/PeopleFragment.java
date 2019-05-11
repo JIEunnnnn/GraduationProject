@@ -11,10 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.owner.project_final.R;
 import com.example.owner.project_final.chat.MessageActivity;
 import com.example.owner.project_final.model.UserModel;
@@ -88,12 +86,13 @@ public class PeopleFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {//이미지넣어주는 부분
-
+/*
             Glide.with
                     (holder.itemView.getContext())
                     .load(userModels.get(position).profileImageUrl)
                     //.apply(new RequestOptions().circleCrop())
                     .into(((CustomViewHolder)holder).imageView);
+                    */
             //UserName 불러오는게 getName이 맞는지?
             ((CustomViewHolder)holder).textView.setText(userModels.get(position).getName());
 
@@ -118,12 +117,12 @@ public class PeopleFragment extends Fragment {
         }
 
         private class CustomViewHolder extends RecyclerView.ViewHolder {
-            public ImageView imageView;
+            //public ImageView imageView;
             public TextView textView;
 
             public CustomViewHolder(View view) {
                 super(view);
-                imageView = (ImageView) view.findViewById(R.id.frienditem_imageview);
+                //imageView = (ImageView) view.findViewById(R.id.frienditem_imageview);
                 textView = (TextView) view.findViewById(R.id.frienditem_textview);
             }
         }
