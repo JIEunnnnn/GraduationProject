@@ -321,7 +321,7 @@ public class FoodActivity extends AppCompatActivity {
                         @Override
                         public void onPermissionsChecked(MultiplePermissionsReport report) {
                             if (report.areAllPermissionsGranted()) {
-                                intent = new Intent().setClass(FoodActivity.this, HobbyWriteActivity.class);
+                                intent = new Intent().setClass(FoodActivity.this, FoodWriteActivity.class);
                                 startActivity(intent);
                                 foodActivity.finish();
                                 overridePendingTransition(0, 0);

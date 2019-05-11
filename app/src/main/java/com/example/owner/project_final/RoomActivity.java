@@ -321,7 +321,7 @@ public class RoomActivity extends AppCompatActivity {
                         @Override
                         public void onPermissionsChecked(MultiplePermissionsReport report) {
                             if (report.areAllPermissionsGranted()) {
-                                intent = new Intent().setClass(RoomActivity.this, HobbyWriteActivity.class);
+                                intent = new Intent().setClass(RoomActivity.this, RoomWriteActivity.class);
                                 startActivity(intent);
                                 roomActivity.finish();
                                 overridePendingTransition(0, 0);
