@@ -48,9 +48,9 @@
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|center_vertical"
-                        android:text="글 제목"
+                        android:text="글제목"
                         android:textColor="#111111"
-                        android:textSize="11dp"
+                        android:textSize="16dp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -63,7 +63,9 @@
                             android:id="@+id/title"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.7" />
+                            android:layout_weight="0.7"
+                            android:textStyle="bold"
+                            android:textSize="26dp"/>
 
 
                         <TextView

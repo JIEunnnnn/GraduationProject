@@ -14,7 +14,7 @@
 
         <ImageView
             android:id="@+id/registerActivity_imageview_profile"
-            android:src="@drawable/icon_account"
+            android:src="@drawable/icon_camera"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
