@@ -90,19 +90,16 @@ public class FreeWriteActivity extends AppCompatActivity {
 
     @BindView(R.id.Contents)
     EditText editDiscription;
-/* 사진 삽입
-    @BindView(R.id.photo_1)
-    ImageView Photo1;
-
-    @BindView(R.id.default_photo_1)
-    ImageView Photodefalut1;
-
-    @BindView(R.id.photo_2)
-    ImageView Photo2;
-
-    @BindView(R.id.default_photo_2)
-    ImageView Photodefalut2;
-*/
+/* 사진 삽입 */
+        @BindView(R.id.photo_1)
+        ImageView Photo1;
+        @BindView(R.id.default_photo_1)
+        ImageView Photodefalut1;
+        @BindView(R.id.photo_2)
+        ImageView Photo2;
+        @BindView(R.id.default_photo_2)
+        ImageView Photodefalut2;
+/* 사진 삽입 */
     @BindView(R.id.scroll)
     ScrollView scrollView;
 
@@ -197,19 +194,19 @@ public class FreeWriteActivity extends AppCompatActivity {
                         break;
                     case R.id.navi_tab3_3:    //음식주문 게시판
                         ////Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
-                        intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
+                        intent = new Intent().setClass( getApplicationContext(), FoodActivity.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
                     case R.id.navi_tab3_4:    //취미여가 게시판
                         //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
-                        intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
+                        intent = new Intent().setClass( getApplicationContext(), HobbyActivity.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
                     case R.id.navi_tab3_5:    //자유게시판
                         //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
-                        intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
+                        intent = new Intent().setClass( getApplicationContext(), FreeActivity.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
@@ -248,7 +245,7 @@ public class FreeWriteActivity extends AppCompatActivity {
         if (unknown_name_writer.isChecked()) {
             unknown_name_writer_check = true;
         }
-/* 사진 삽입
+/* 사진 삽입 */
         final ArrayList<Uri> storePhotoArray = new ArrayList<>();
         int i = 0;
         while (i < photoUri.length) {
@@ -257,18 +254,17 @@ public class FreeWriteActivity extends AppCompatActivity {
             }
             i++;
         }
-
+        /* 사진 삽입 */
         showProgressDialog("업로드 중입니다.");
         String autoKey = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_FREES).push().getKey();
         final String storageKey = FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_FREES).push().getKey();
-
-
+/*
         FreeWrite freeWrite = new FreeWrite(FirebaseApi.getCurrentUser().getUid(), editTitle.getText().toString(), editUser.getText().toString(),
                 unknown_name_writer_check, storageKey, editDiscription.getText().toString(), postingDate, autoKey);
 */
         FreeWrite freeWrite = new FreeWrite(FirebaseApi.getCurrentUser().getUid(), editTitle.getText().toString(), editUser.getText().toString(),
-                unknown_name_writer_check, editDiscription.getText().toString(), postingDate);
-/* 사진 삽입
+                unknown_name_writer_check, editDiscription.getText().toString(), postingDate, autoKey);
+/* 사진 삽입 */
         L.e("::::::auto key : " + autoKey);
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child(PublicVariable.FIREBASE_CHILD_FREES).child(FirebaseApi.getCurrentUser().getUid()).child(autoKey).setValue(freeWrite).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -300,7 +296,6 @@ public class FreeWriteActivity extends AppCompatActivity {
                                     }
                                 }).show().getWindow().setLayout(width, height);
                             }
-
                             @Override
                             public void onFailure(Exception e) {
                                 Toast.makeText(getApplicationContext(),  "onFailure", Toast.LENGTH_LONG).show();
@@ -310,7 +305,7 @@ public class FreeWriteActivity extends AppCompatActivity {
                 }
             }
         });
-*/
+/* 사진 삽입 */
     }
 
     @OnClick(R.id.cancelButton)
@@ -390,82 +385,74 @@ public class FreeWriteActivity extends AppCompatActivity {
         return result;
     }
 
-/* 사진 삽입
-    @OnClick(R.id.photo_view_1)
-    public void setPhotoClick_01(View view) {
-        Dexter.withActivity(FreeWriteActivity.this).withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE).withListener(new MultiplePermissionsListener() {
-            @Override
-            public void onPermissionsChecked(MultiplePermissionsReport report) {
-                if (report.areAllPermissionsGranted()) {
-                    mPhotoPosition = 0;
-                    Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, REQUEST_PICK_IMAGE);
-                }
-            }
-
-            @Override
-            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                token.continuePermissionRequest();
-            }
-        }).check();
-    }
-
-    @OnClick(R.id.photo_view_2)
-    public void setPhotoClick_02(View view) {
-        Dexter.withActivity(FreeWriteActivity.this).withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE).withListener(new MultiplePermissionsListener() {
-            @Override
-            public void onPermissionsChecked(MultiplePermissionsReport report) {
-                if (report.areAllPermissionsGranted()) {
-                    mPhotoPosition = 1;
-                    Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, REQUEST_PICK_IMAGE);
-                }
-            }
-
-            @Override
-            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                token.continuePermissionRequest();
-            }
-        }).check();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case REQUEST_PICK_IMAGE:
-                //[오투잡]이미지를 갤러리에서 Callback Url 을 콜백하는 부분;
-                L.i(":::::: OPEN_IMAGE_REQUEST_CODE");
-                try {
-                    Uri uri;
-
-                    if (data == null) {
-                        return;
+/* 사진 삽입 */
+        @OnClick(R.id.photo_view_1)
+        public void setPhotoClick_01(View view) {
+            Dexter.withActivity(FreeWriteActivity.this).withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE).withListener(new MultiplePermissionsListener() {
+                @Override
+                public void onPermissionsChecked(MultiplePermissionsReport report) {
+                    if (report.areAllPermissionsGranted()) {
+                        mPhotoPosition = 0;
+                        Intent intent = new Intent(Intent.ACTION_PICK);
+                        intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, REQUEST_PICK_IMAGE);
                     }
-                    uri = data.getData();
-
-                    L.e("::::uri : " + uri);
-                    photoUri[mPhotoPosition] = uri.toString();
-
-                    if (mPhotoPosition == 0) {
-                        Photo1.setVisibility(View.VISIBLE);
-                        Photodefalut1.setVisibility(View.GONE);
-                        ImageLoaderHelper.setProfileImage(getApplicationContext(), uri, Photo1, "");
-                    } else {
-                        Photo2.setVisibility(View.VISIBLE);
-                        Photodefalut2.setVisibility(View.GONE);
-                        ImageLoaderHelper.setProfileImage(getApplicationContext(), uri, Photo2, "");
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-                break;
+                @Override
+                public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                    token.continuePermissionRequest();
+                }
+            }).check();
         }
-    }
-*/
+        @OnClick(R.id.photo_view_2)
+        public void setPhotoClick_02(View view) {
+            Dexter.withActivity(FreeWriteActivity.this).withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE).withListener(new MultiplePermissionsListener() {
+                @Override
+                public void onPermissionsChecked(MultiplePermissionsReport report) {
+                    if (report.areAllPermissionsGranted()) {
+                        mPhotoPosition = 1;
+                        Intent intent = new Intent(Intent.ACTION_PICK);
+                        intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, REQUEST_PICK_IMAGE);
+                    }
+                }
+                @Override
+                public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                    token.continuePermissionRequest();
+                }
+            }).check();
+        }
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            switch (requestCode) {
+                case REQUEST_PICK_IMAGE:
+                    //[오투잡]이미지를 갤러리에서 Callback Url 을 콜백하는 부분;
+                    L.i(":::::: OPEN_IMAGE_REQUEST_CODE");
+                    try {
+                        Uri uri;
+                        if (data == null) {
+                            return;
+                        }
+                        uri = data.getData();
+                        L.e("::::uri : " + uri);
+                        photoUri[mPhotoPosition] = uri.toString();
+                        if (mPhotoPosition == 0) {
+                            Photo1.setVisibility(View.VISIBLE);
+                            Photodefalut1.setVisibility(View.GONE);
+                            ImageLoaderHelper.setProfileImage(getApplicationContext(), uri, Photo1, "");
+                        } else {
+                            Photo2.setVisibility(View.VISIBLE);
+                            Photodefalut2.setVisibility(View.GONE);
+                            ImageLoaderHelper.setProfileImage(getApplicationContext(), uri, Photo2, "");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+        }
+/* 사진 삽입 */
     // For Toolbar ---------------------------------------------------------------------------------
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -99,19 +99,19 @@ public class ChattingActivity extends AppCompatActivity {
                         break;
                     case R.id.navi_tab3_3:    //음식주문 게시판
                         ////Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
-                        intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
+                        intent = new Intent().setClass( getApplicationContext(), FoodActivity.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
                     case R.id.navi_tab3_4:    //취미여가 게시판
                         //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
-                        intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
+                        intent = new Intent().setClass( getApplicationContext(), HobbyActivity.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
                     case R.id.navi_tab3_5:    //자유게시판
                         //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
-                        intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
+                        intent = new Intent().setClass( getApplicationContext(), FreeActivity.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;

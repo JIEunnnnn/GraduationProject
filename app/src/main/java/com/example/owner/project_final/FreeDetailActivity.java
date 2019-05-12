@@ -79,13 +79,13 @@ public class FreeDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.Contents)
     TextView tvDiscription;
-/* 사진 삽입
-    @BindView(R.id.photo_1)
-    ImageView ivPhoto1;
+    /* 사진 삽입
+        @BindView(R.id.photo_1)
+        ImageView ivPhoto1;
 
-    @BindView(R.id.photo_2)
-    ImageView ivPhoto2;
-*/
+        @BindView(R.id.photo_2)
+        ImageView ivPhoto2;
+    */
     @BindView(R.id.unknown_name)
     CheckBox checkBoxunknownName;
 
@@ -101,9 +101,9 @@ public class FreeDetailActivity extends AppCompatActivity {
     private AlertDialog dialog;
     FreeWrite mFreeWrite;
     CommentAdapter mCommentAdapter;
-/*사진 삽입
-    String[] photoUri = {"", ""};
-*/
+    /*사진 삽입
+        String[] photoUri = {"", ""};
+    */
     Intent intent;
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -266,19 +266,19 @@ public class FreeDetailActivity extends AppCompatActivity {
                         break;
                     case R.id.navi_tab3_3:    //음식주문 게시판
                         ////Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
-                        intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
+                        intent = new Intent().setClass( getApplicationContext(), FoodActivity.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
                     case R.id.navi_tab3_4:    //취미여가 게시판
                         //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
-                        intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
+                        intent = new Intent().setClass( getApplicationContext(), HobbyActivity.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
                     case R.id.navi_tab3_5:    //자유게시판
                         //Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
-                        intent = new Intent().setClass( getApplicationContext(), Tab3Activity.class );
+                        intent = new Intent().setClass( getApplicationContext(), FreeActivity.class );
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
@@ -362,30 +362,30 @@ public class FreeDetailActivity extends AppCompatActivity {
 
     }
 
-/* 사진 삽입
-    @OnClick(R.id.photo_view_1)
-    public void setPhotoClick_01(View view) {
-        if (photoUri[0].equalsIgnoreCase("")) {
-            return;
+    /* 사진 삽입
+        @OnClick(R.id.photo_view_1)
+        public void setPhotoClick_01(View view) {
+            if (photoUri[0].equalsIgnoreCase("")) {
+                return;
+            }
+
+            Intent intent = new Intent(this, PhotoZoomActivity.class);
+            intent.putExtra("photo", photoUri[0]);
+            startActivity(intent);
+
+
         }
 
-        Intent intent = new Intent(this, PhotoZoomActivity.class);
-        intent.putExtra("photo", photoUri[0]);
-        startActivity(intent);
-
-
-    }
-
-    @OnClick(R.id.photo_view_2)
-    public void setPhotoClick_02(View view) {
-        if (photoUri[1].equalsIgnoreCase("")) {
-            return;
+        @OnClick(R.id.photo_view_2)
+        public void setPhotoClick_02(View view) {
+            if (photoUri[1].equalsIgnoreCase("")) {
+                return;
+            }
+            Intent intent = new Intent(this, PhotoZoomActivity.class);
+            intent.putExtra("photo", photoUri[1]);
+            startActivity(intent);
         }
-        Intent intent = new Intent(this, PhotoZoomActivity.class);
-        intent.putExtra("photo", photoUri[1]);
-        startActivity(intent);
-    }
-*/
+    */
     private void hideKeyboard() {
         //hide keyboard
         View currentFocus = getCurrentFocus();
@@ -396,38 +396,38 @@ public class FreeDetailActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), stateHide);
         }
     }
-/* 사진 삽입
-    private void setVaildFirebaseStorage(String key, String storageKey) {
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        if (storageKey.equalsIgnoreCase("")) {
-            return;
-        }
+    /* 사진 삽입
+        private void setVaildFirebaseStorage(String key, String storageKey) {
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            if (storageKey.equalsIgnoreCase("")) {
+                return;
+            }
 
-        for (int index = 0; index < 2; index++) {
-            StorageReference storageRef = storage.getReferenceFromUrl(PublicVariable.FIREBASE_STORAGE).child(PublicVariable.FIREBASE_STORAGE_FREES).child(key).child("freeImage" + (index + 1) + ".jpg").child(storageKey);
-            final int success = index;
-            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    if (success == 0) {
-                        photoUri[0] = uri.toString();
-                    } else {
-                        photoUri[1] = uri.toString();
+            for (int index = 0; index < 2; index++) {
+                StorageReference storageRef = storage.getReferenceFromUrl(PublicVariable.FIREBASE_STORAGE).child(PublicVariable.FIREBASE_STORAGE_FREES).child(key).child("freeImage" + (index + 1) + ".jpg").child(storageKey);
+                final int success = index;
+                storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        if (success == 0) {
+                            photoUri[0] = uri.toString();
+                        } else {
+                            photoUri[1] = uri.toString();
+                        }
+                        ImageLoaderHelper.setProfileImage(getApplicationContext(), uri, success == 0 ? ivPhoto1 : ivPhoto2, "");
                     }
-                    ImageLoaderHelper.setProfileImage(getApplicationContext(), uri, success == 0 ? ivPhoto1 : ivPhoto2, "");
-                }
-            });
+                });
+            }
         }
+    */
+    // For Toolbar ---------------------------------------------------------------------------------
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);    //게시판 목록 외에서 사용할 툴바 메뉴
+        return true;
     }
-*/
-// For Toolbar ---------------------------------------------------------------------------------
-@Override
-public boolean onCreateOptionsMenu(Menu menu) {
-    //return super.onCreateOptionsMenu(menu);
-    MenuInflater menuInflater = getMenuInflater();
-    menuInflater.inflate(R.menu.menu, menu);    //게시판 상세에서 사용할 툴바 메뉴
-    return true;
-}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -448,6 +448,10 @@ public boolean onCreateOptionsMenu(Menu menu) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
+            case R.id.MyPageButton:
+                intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );    //MyㅔageActivity로 이동
+                startActivity(intent);
+                return true;
 /*
             case R.id.action_modify:
                 intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );    //글 수정으로 이동
@@ -458,10 +462,6 @@ public boolean onCreateOptionsMenu(Menu menu) {
                 FirebaseDatabase.getInstance().getReference().child(PublicVariable.FIREBASE_CHILD_FREES).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(id).removeValue();
                 intent = new Intent().setClass( getApplicationContext(), FreeActivity.class );    //글 목록으로 이동
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                return true;
-            case R.id.MyPageButton:
-                intent = new Intent().setClass( getApplicationContext(), MypageActivity.class );    //MypageActivity로 이동
                 startActivity(intent);
                 return true;
             case R.id.LogOutButton:

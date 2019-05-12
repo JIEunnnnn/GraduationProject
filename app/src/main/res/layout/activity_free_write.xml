@@ -137,12 +137,13 @@
                         android:scrollbars="vertical" />
                 </LinearLayout>
 
-<!-- 사진 삽입
+<!-- 사진 삽입 -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="invisible">
 
                     <TextView
                         android:layout_width="50dp"
@@ -233,7 +234,7 @@
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
--->
+<!-- 사진 삽입 -->
 
                 <LinearLayout
                     android:layout_width="wrap_content"

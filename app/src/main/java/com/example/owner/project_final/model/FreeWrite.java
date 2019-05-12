@@ -9,8 +9,6 @@ public class FreeWrite implements Serializable {
 
     private boolean unknown_name;
 
-    private String photoID;
-
     private String description;
 
     private String postingDate;
@@ -31,13 +29,14 @@ public class FreeWrite implements Serializable {
         this.id = id;   //autokey
     }
 */
-    public FreeWrite(String addedByUser, String title, String writer,  boolean unknown_name, String description, String postingDate) {
+    public FreeWrite(String addedByUser, String title, String writer,  boolean unknown_name, String description, String postingDate, String id) {
         this.addedByUser = addedByUser; //FirebaseApi.getCurrentUser().getUid()
         this.title = title; //editTItle
         this.writer = writer;   //editUser
         this.unknown_name = unknown_name; //unknown_name
         this.description = description; //editDescription
         this.postingDate = postingDate; //postingDate
+        this.id = id;
     }
 
     public String getPostingDate() {
@@ -69,21 +68,17 @@ public class FreeWrite implements Serializable {
         return unknown_name;
     }
 
-    public String getPhotoID() {
-        return photoID;
-    }
-
     public String getDescription() {
         return description;
     }
 
     @Override
     public String toString() {
-        return "HobbyWrite{" +
+        return "FreeWrite{" +
                 "addedByUser='" + addedByUser + '\'' +
                 ", title='" + title + '\'' +
                 ", writer='" + writer + '\'' +
-                ", photoID='" + photoID + '\'' +
+                ", unKnownCheck='" + unknown_name + '\'' +
                 ", description='" + description + '\'' +
                 ", postingDate='" + postingDate + '\'' +
                 ", id='" + id + '\'' +
