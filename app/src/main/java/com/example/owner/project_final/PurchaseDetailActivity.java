@@ -162,7 +162,7 @@ public class PurchaseDetailActivity extends AppCompatActivity {
             tvCost.setText(mPurchaseWrite.geteditCost());
             tvTradeItem.setText(mPurchaseWrite.getTradeItem());
             tvAddress.setText(mPurchaseWrite.getAddress());
-            tvDetailAddress.setText(mPurchaseWrite.getDescription());
+            tvDetailAddress.setText(mPurchaseWrite.getDetailAddress());
             tvDiscription.setText(mPurchaseWrite.getDescription());
 
             mMapFragemnt = MapFragemnt.getInstance();

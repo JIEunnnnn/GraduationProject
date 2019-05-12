@@ -180,7 +180,7 @@ public class FoodDetailActivity extends AppCompatActivity {
             //option_food_pay_result.setText(mFoodWrite.getoption_food_pay_result());
             //option_food_divide_result.setText(mFoodWrite.getoption_food_divide_result());
             tvAddress.setText(mFoodWrite.getAddress());
-            tvDetailAddress.setText(mFoodWrite.getDescription());
+            tvDetailAddress.setText(mFoodWrite.getDetailAddress());
             tvDiscription.setText(mFoodWrite.getDescription());
 
             if (mFoodWrite.getoption_food_pay_01() == mFoodWrite.getoption_food_pay_result()) {

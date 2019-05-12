@@ -179,7 +179,7 @@ public class HobbyDetailActivity extends AppCompatActivity {
             tvCost.setText(mHobbyWrite.geteditCost());
             //option_hobby_result.setText(mHobbyWrite.getoption_hobby_result());
             tvAddress.setText(mHobbyWrite.getAddress());
-            tvDetailAddress.setText(mHobbyWrite.getDescription());
+            tvDetailAddress.setText(mHobbyWrite.getDetailAddress());
             tvDiscription.setText(mHobbyWrite.getDescription());
 
             option_hobby_result_count = mHobbyWrite.getoption_hobby_result_count();

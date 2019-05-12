@@ -183,7 +183,7 @@ public class RoomDetailActivity extends AppCompatActivity {
             tvEndDay.setText(mRoomWrite.getRentalEndTime());
             tvEDailyRental.setText(mRoomWrite.getRentalFee());
             tvAddress.setText(mRoomWrite.getAddress());
-            tvDetailAddress.setText(mRoomWrite.getDescription());
+            tvDetailAddress.setText(mRoomWrite.getDetailAddress());
             tvDiscription.setText(mRoomWrite.getDescription());
 
             if (!mRoomWrite.getRoomOption1().equalsIgnoreCase("")) {
