@@ -9,7 +9,6 @@ package com.example.owner.project_final;
  * 게시판 글 내용 상세 보기 화면 구성
  */
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,13 +22,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import butterknife.ButterKnife;
 
 public class Tab3Activity extends MainActivity {
 
@@ -245,4 +241,6 @@ public class Tab3Activity extends MainActivity {
     }
     //----------------------------------------------------------------------------------------------
 
+    public static class FindActivity  {
+    }
 }

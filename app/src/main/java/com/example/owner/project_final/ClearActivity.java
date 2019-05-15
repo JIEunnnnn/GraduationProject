@@ -38,6 +38,14 @@ public class ClearActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     // ---------------------------------------------------------------------------------------------
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        intent = new Intent().setClass( getApplicationContext(),MainActivity.class );
+        startActivity(intent);
+
+    }
+
     @SuppressLint("StringFormatMatches")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,7 +189,10 @@ public class ClearActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
+
 
 
 

@@ -252,7 +252,7 @@ public class GameView extends TextureView implements TextureView.SurfaceTextureL
         mBallRadius = width < height? width/40 : height/40;
         mBall = new Ball(mBallRadius, width/2, height/2);
         mItemList.add(mBall);
-        mLife = 5;
+        mLife = 2;
         mGameStartTime = System.currentTimeMillis();
     }
 
