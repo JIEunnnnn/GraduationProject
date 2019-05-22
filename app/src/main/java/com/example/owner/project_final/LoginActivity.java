@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth fireauth;
     private SignInButton buttonGoogle;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,9 +103,12 @@ public class LoginActivity extends AppCompatActivity {
         });
 //-------------
         processStart();
+
     }
 
 //------------
+
+
 
     private void signIn() {
         Intent signInIntent = googleSignInClient.getSignInIntent();
