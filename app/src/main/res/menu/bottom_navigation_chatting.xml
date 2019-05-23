@@ -4,14 +4,11 @@
     <item
         android:id="@+id/action_people"
         android:icon="@drawable/icon_people"
-        android:title="People"/>
+        android:title="People" />
     <item
         android:id="@+id/action_chat"
         android:icon="@drawable/icon_chat"
-        android:title="Chat"/>
-    <item
-        android:id="@+id/action_account"
-        android:icon="@drawable/icon_account"
-        android:title="Account"/>
+        android:title="Chat" />
+
 
 </menu>

@@ -150,7 +150,6 @@ public class ChattingActivity extends AppCompatActivity {
                     case R.id.action_chat:
                         getFragmentManager().beginTransaction().replace(R.id.chattingactivity_framelayout, new ChatFragment()).commit();
                         return true;
-                    case R.id.action_account:
 
 
 
