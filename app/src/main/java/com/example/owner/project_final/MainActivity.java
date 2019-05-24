@@ -38,8 +38,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import me.relex.circleindicator.CircleIndicator;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 public class MainActivity extends AppCompatActivity {
+    private AdView mAdView;
     FragmentPagerAdapter adapterViewPager;
 
 
@@ -70,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
         indicator.setViewPager(vpPger);
 
         MobileAds.initialize(this, "ca-app-pub-1148515500898185~3187151648");
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         /*/ For AdView ------------------------------------------------------------------------------
         AdView mAdView = (AdView) findViewById(R.id.ads_main);
