@@ -97,6 +97,12 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.okhttp3:okhttp:3.14.0'
 
+    //스와이프
+    implementation 'me.relex:circleindicator:1.2.2'
+
+    //배너
+    implementation 'com.google.android.gms:play-services-ads:17.2.0'
+
 
 }
 

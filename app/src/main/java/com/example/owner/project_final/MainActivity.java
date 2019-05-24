@@ -9,7 +9,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -29,10 +33,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import me.relex.circleindicator.CircleIndicator;
+
 public class MainActivity extends AppCompatActivity {
+    FragmentPagerAdapter adapterViewPager;
+
 
     Intent intent;
 
@@ -52,6 +61,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ViewPager vpPger =(ViewPager) findViewById(R.id.vpPager);
+        adapterViewPager = new MyPagerAapter(getSupportFragmentManager());
+        vpPger.setAdapter(adapterViewPager);
+
+        CircleIndicator indicator = (CircleIndicator)findViewById(R.id.indicator);
+        indicator.setViewPager(vpPger);
+
+        MobileAds.initialize(this, "ca-app-pub-1148515500898185~3187151648");
 
         /*/ For AdView ------------------------------------------------------------------------------
         AdView mAdView = (AdView) findViewById(R.id.ads_main);
@@ -217,6 +235,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public static class MyPagerAapter extends FragmentPagerAdapter{
+        private static int NUM_ITEMS = 3;
+
+        public MyPagerAapter(FragmentManager fragmentManager){
+            super(fragmentManager);
+        }
+        // Returns total number of pages
+        @Override
+        public int getCount() {
+            return NUM_ITEMS;
+        }
+        // Returns the fragment to display for that page
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+
+                    return FirstFragment.newInstance(0, "Page # 1");
+                case 1:
+                    return SecondFragment.newInstance(1, "Page # 2");
+                case 2:
+                    return ThirdFragment.newInstance(2, "Page # 3");
+                default:
+                    return null;
+            }
+        }
+        // Returns the page title for the top indicator
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "Page " + position;
+        }
     }
 
     // For Toolbar ---------------------------------------------------------------------------------

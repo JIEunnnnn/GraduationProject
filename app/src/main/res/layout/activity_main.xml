@@ -40,13 +40,22 @@
                 android:orientation="vertical"
                 android:layout_margin="16dp">
 
-                <ImageView
-                    android:id="@+id/image"
+
+
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/vpPager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/title"
-                    android:layout_weight="3"/>
+                    android:layout_height="200dp"/>
+
+                <me.relex.circleindicator.CircleIndicator
+                    android:id="@+id/indicator"
+                    app:ci_drawable="@drawable/black_radius"
+                    app:ci_height="7dp"
+                    app:ci_width="7dp"
+                    app:ci_margin="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"/>
 
                 <LinearLayout
                     android:id="@+id/linearlayoutH1"
